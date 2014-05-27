@@ -1,17 +1,28 @@
+ROOT=..
+ZORBA := $(ROOT)/../zorba/zorba-3.0/build/dist
 
-O=tst.o
+ifeq "${MP_CONFIG}" ""
+MP_CONFIG := $(shell if test -x $(ROOT)/../metaproxy/metaproxy-config; then echo $(ROOT)/../metaproxy/metaproxy-config; else echo metaproxy-config; fi)
+endif
 
-ZORBA := ../../zorba/zorba-3.0/build/dist
+MP_CFLAGS := $(shell $(MP_CONFIG) --cflags)
+MP_LIBS := $(shell $(MP_CONFIG) --libs)
+MP_SO := metaproxy_filter_xquery.so
 
-CXXFLAGS=-I$(ZORBA)/include
+ZORBA_LIBS := -L $(ZORBA)/lib -lzorba_simplestore
+ZORBA_CFLAGS := -I$(ZORBA)/include $(MP_CFLAGS)
+CXXFLAGS := $(ZORBA_CFLAGS) $(MP_CFLAGS) -fPIC
 
-LIB=-L $(ZORBA)/lib -lzorba_simplestore
+all: tst $(MP_SO)
 
-tst: $(O)
-	$(CXX) $^ -o $@ $(LIB)
+tst: tst.o
+	$(CXX) $^ -o $@ $(ZORBA_LIBS)
+
+$(MP_SO): metaproxy_filter_xquery.o
+	$(CXX) -shared $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(MP_LIBS) $(ZORBA_LIBS)
 
 clean:
-	rm -f *.o tst
+	rm -f *.o tst $(MP_SO)
 
 run: tst
 	LD_LIBRARY_PATH=$(ZORBA)/lib ./tst
