@@ -37,7 +37,7 @@ example_2(Zorba* aZorba)
     // lQuery->setFileName("http://base/");
     lQuery->setFileName("/home/adam/proj/marc2bibframe/xbin/");
 
-    lQuery->compile(*qfile.get(), lHints);
+    lQuery->compile(*qfile, lHints);
 
     zorba::DynamicContext* lDynamicContext = lQuery->getDynamicContext();
 
@@ -57,7 +57,13 @@ example_2(Zorba* aZorba)
         "/home/adam/proj/yaz/test/marc7.xml");
     lDynamicContext->setVariable("marcxmluri", lItem);
 
-    std::cout << lQuery << std::endl;
+    std::stringstream ss;
+
+    lQuery->execute(ss);
+
+    std::string result = ss.str();
+
+    std::cout << result << std::endl;
 
     return true;
 }
