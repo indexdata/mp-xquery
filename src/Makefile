@@ -24,5 +24,8 @@ $(MP_SO): metaproxy_filter_xquery.o
 clean:
 	rm -f *.o tst $(MP_SO)
 
-run: tst
+run_tst: tst
 	LD_LIBRARY_PATH=$(ZORBA)/lib ./tst
+
+run_mp:
+	LD_LIBRARY_PATH=$(ZORBA)/lib ../../metaproxy/src/metaproxy -c config.xml
