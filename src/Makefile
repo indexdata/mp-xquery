@@ -28,4 +28,4 @@ run_tst: tst
 	LD_LIBRARY_PATH=$(ZORBA)/lib ./tst
 
 run_mp:
-	LD_LIBRARY_PATH=$(ZORBA)/lib ../../metaproxy/src/metaproxy -c config.xml
+	LD_LIBRARY_PATH=$(ZORBA)/lib ../../metaproxy/src/metaproxy -c config.xml -X
