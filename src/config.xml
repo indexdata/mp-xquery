@@ -17,7 +17,6 @@
       </filter>
       <filter type="xquery">
 	<script value="/home/adam/proj/marc2bibframe/xbin/zorba3-0.xqy"/>
-	<filename value="/home/adam/proj/marc2bibframe/xbin/"/>
 	<record value="marcxmluri"/>
 	<setVariable name="serialization" value="rdxml"/>
 	<setVariable name="baseuri" value="http://base/"/>

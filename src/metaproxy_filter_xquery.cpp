@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <yaz/log.h>
 #include <yaz/oid_db.h>
 #include <map>
-
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -322,19 +322,6 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
             if (name.length() > 0)
                 zorba_variables[name] = value;
         }
-        else if (!strcmp((const char *) ptr->name, "filename"))
-        {
-            std::string value;
-            struct _xmlAttr *attr;
-            for (attr = ptr->properties; attr; attr = attr->next)
-                if (!strcmp((const char *) attr->name, "value"))
-                    value = mp::xml::get_text(attr->children);
-                else
-                    throw mp::filter::FilterException(
-                        "Bad attribute " + std::string((const char *)
-                                                       attr->name));
-            zorba_filename = value;
-        }
         else if (!strcmp((const char *) ptr->name, "script"))
         {
             std::string value;
@@ -372,8 +359,6 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
         throw mp::filter::FilterException("Missing element script");
     if (zorba_record_variable.length() == 0)
         throw mp::filter::FilterException("Missing element record");
-    if (zorba_filename.length() == 0)
-        throw mp::filter::FilterException("Missing element filename");
     if (!test_only)
     {
         void* lStore = StoreManager::getStore();
@@ -381,11 +366,12 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
 
         lQuery = lZorba->createQuery();
 
-        lQuery->setFileName(zorba_filename);
+        size_t t = zorba_script.find_last_of('/');
+        if (t != std::string::npos)
+            lQuery->setFileName(zorba_script.substr(0, t + 1));
 
-        std::unique_ptr<std::istream> qfile;
-        qfile.reset(new std::ifstream(zorba_script.c_str()));
-
+        std::unique_ptr<std::istream> qfile(
+            new std::ifstream(zorba_script.c_str()));
         Zorba_CompilerHints lHints;
         lQuery->compile(*qfile, lHints);
     }
