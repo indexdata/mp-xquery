@@ -102,10 +102,16 @@ bool yf::XQuery::convert_one_record(const char *input_buf,
     lItem = lZorba->getItemFactory()->createString(rec_content);
     lDynamicContext->setVariable(zorba_record_variable, lItem);
 
-    std::stringstream ss;
-    tQuery->execute(ss);
-    result = ss.str();
-    return true;
+    try {
+        std::stringstream ss;
+        tQuery->execute(ss);
+        result = ss.str();
+        return true;
+    } catch ( ZorbaException &e) {
+        std::string msg = e.what();
+        yaz_log(YLOG_WARN, "XQuery execute failure: %s", msg.c_str());
+        return false;
+    }
 }
 
 void yf::XQuery::process(Package &package) const
@@ -366,14 +372,19 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
 
         lQuery = lZorba->createQuery();
 
-        size_t t = zorba_script.find_last_of('/');
-        if (t != std::string::npos)
-            lQuery->setFileName(zorba_script.substr(0, t + 1));
-
-        std::unique_ptr<std::istream> qfile(
-            new std::ifstream(zorba_script.c_str()));
-        Zorba_CompilerHints lHints;
-        lQuery->compile(*qfile, lHints);
+        try {
+            size_t t = zorba_script.find_last_of('/');
+            if (t != std::string::npos)
+                lQuery->setFileName(zorba_script.substr(0, t + 1));
+            std::unique_ptr<std::istream> qfile(
+                new std::ifstream(zorba_script.c_str()));
+            Zorba_CompilerHints lHints;
+            lQuery->compile(*qfile, lHints);
+        } catch ( ZorbaException &e) {
+            std::string msg = "XQuery compile failure: ";
+            msg += e.what();
+            throw mp::filter::FilterException(msg);
+        }
     }
 }
 
