@@ -98,9 +98,8 @@ bool yf::XQuery::convert_one_record(const char *input_buf,
         lItem = lZorba->getItemFactory()->createString(it->second);
         lDynamicContext->setVariable(it->first, lItem);
     }
-    // TODO: Make tmp file here
-    lItem = lZorba->getItemFactory()->createString(
-        "/home/adam/proj/yaz/test/marc7.xml");
+    std::string rec_content = "raw:" + std::string(input_buf, input_len);
+    lItem = lZorba->getItemFactory()->createString(rec_content);
     lDynamicContext->setVariable(zorba_record_variable, lItem);
 
     std::stringstream ss;
