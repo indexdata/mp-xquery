@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <metaproxy/util.hpp>
 #include <yaz/log.h>
 #include <yaz/oid_db.h>
+#include <yaz/diagbib1.h>
 #include <map>
 #include <string>
 #include <iostream>
@@ -108,8 +109,8 @@ bool yf::XQuery::convert_one_record(const char *input_buf,
         result = ss.str();
         return true;
     } catch ( ZorbaException &e) {
-        std::string msg = e.what();
-        yaz_log(YLOG_WARN, "XQuery execute failure: %s", msg.c_str());
+        result = e.what();
+        yaz_log(YLOG_WARN, "XQuery execute: %s", result.c_str());
         return false;
     }
 }
@@ -278,11 +279,11 @@ void yf::XQuery::process(Package &package) const
         int i;
         for (i = 0; i < records->num_records; i++)
         {
-            Z_NamePlusRecord *npr = records->records[i];
-            if (npr->which == Z_NamePlusRecord_databaseRecord)
+            Z_NamePlusRecord **npr = &records->records[i];
+            if ((*npr)->which == Z_NamePlusRecord_databaseRecord)
             {
                 const char *details = 0;
-                Z_External *r = npr->u.databaseRecord;
+                Z_External *r = (*npr)->u.databaseRecord;
                 int ret_trans = -1;
                 if (r->which == Z_External_octet &&
                     !oid_oidcmp(r->direct_reference, yaz_oid_recsyn_xml))
@@ -292,10 +293,17 @@ void yf::XQuery::process(Package &package) const
                         r->u.octet_aligned->buf, r->u.octet_aligned->len,
                         result))
                     {
-                        npr->u.databaseRecord =
+                        (*npr)->u.databaseRecord =
                             z_ext_record_oid(odr_en, yaz_oid_recsyn_xml,
                                              result.c_str(),
                                              result.length());
+                    }
+                    else
+                    {
+                        *npr = zget_surrogateDiagRec(
+                            odr_en, (*npr)->databaseName,
+                            YAZ_BIB1_SYSTEM_ERROR_IN_PRESENTING_RECORDS,
+                            result.c_str());
                     }
                 }
             }
@@ -381,7 +389,7 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
             Zorba_CompilerHints lHints;
             lQuery->compile(*qfile, lHints);
         } catch ( ZorbaException &e) {
-            std::string msg = "XQuery compile failure: ";
+            std::string msg = "XQuery compile: ";
             msg += e.what();
             throw mp::filter::FilterException(msg);
         }
