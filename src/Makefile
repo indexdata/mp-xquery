@@ -19,7 +19,7 @@ tst: tst.o
 	$(CXX) $^ -o $@ $(ZORBA_LIBS)
 
 $(MP_SO): metaproxy_filter_xquery.o
-	$(CXX) -Wl,-rpath -Wl,$(ZORBA)/lib -shared $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(MP_LIBS) $(ZORBA_LIBS)
+	$(CXX) -Wl,-rpath,$(ZORBA)/lib -shared $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(MP_LIBS) $(ZORBA_LIBS)
 
 install: $(MP_SO)
 	mkdir -p $(DESTDIR)$(libdir)/mp-xquery
