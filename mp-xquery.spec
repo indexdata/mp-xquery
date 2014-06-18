@@ -47,7 +47,6 @@ fi
 %setup
 
 %build
-cd src
 make \
 	ZORBA=/opt/zorba
 	OPT_FLAGS="-g -O" \
@@ -55,7 +54,6 @@ make \
 	MP_CONFIG=/usr/bin/metaproxy-config
 
 %install
-cd src
 make DESTDIR=${RPM_BUILD_ROOT} libdir=%{_libdir} install
 
 %clean
@@ -64,3 +62,4 @@ rm -fr ${RPM_BUILD_ROOT}
 %files
 %defattr(-,root,root)
 %{_libdir}/mp-xquery/*
+%{_mandir}/man3/xquery.*
