@@ -1,0 +1,19 @@
+# Metaproxy XML config file schema
+
+namespace mp = "http://indexdata.com/metaproxy"
+
+filter_xquery =
+  attribute type { "xquery" },
+  attribute id { xsd:NCName }?,
+  attribute name { xsd:NCName }?,
+  element mp:script {
+    attribute name { xsd:string },
+  },
+  element mp:record {
+    attribute name { xsd:string },
+  },
+  element mp:variable {
+    attribute name { xsd:string },
+    attribute value { xsd:string },
+  }*
+
