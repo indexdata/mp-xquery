@@ -1,4 +1,4 @@
 NAME=mp-xquery
 CENTOS_DIST="centos6"
-VERSION=0.1
+VERSION=0.2
 ARCHS=amd64
