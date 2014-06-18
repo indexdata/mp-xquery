@@ -16,7 +16,7 @@ CXXFLAGS := $(ZORBA_CFLAGS) $(MP_CFLAGS) -fPIC
 all: tst $(MP_SO)
 
 tst: tst.o
-	$(CXX) $^ -o $@ $(ZORBA_LIBS)
+	$(CXX) -Wl,-rpath,$(ZORBA)/lib $^ -o $@ $(ZORBA_LIBS)
 
 $(MP_SO): metaproxy_filter_xquery.o
 	$(CXX) -Wl,-rpath,$(ZORBA)/lib -shared $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(MP_LIBS) $(ZORBA_LIBS)
@@ -29,7 +29,7 @@ clean:
 	rm -f *.o tst $(MP_SO)
 
 run_tst: tst
-	LD_LIBRARY_PATH=$(ZORBA)/lib ./tst
+	./tst
 
 run_mp:
 	../../metaproxy/src/metaproxy -c config.xml -X
