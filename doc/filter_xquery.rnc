@@ -6,6 +6,10 @@ filter_xquery =
   attribute type { "xquery" },
   attribute id { xsd:NCName }?,
   attribute name { xsd:NCName }?,
+  element mp:elementset {
+    attribute name { xsd:string },
+    attribute backend { xsd:string },
+  },
   element mp:script {
     attribute name { xsd:string },
   },

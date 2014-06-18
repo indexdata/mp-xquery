@@ -16,6 +16,7 @@
          <category access="false" line="true" apdu="false" />
       </filter>
       <filter type="xquery">
+	<elementset name="bibframe" backend="marcxml"/>
 	<script name="/home/adam/proj/marc2bibframe/xbin/zorba3-0.xqy"/>
 	<record name="marcxmluri"/>
 	<variable name="serialization" value="rdxml"/>

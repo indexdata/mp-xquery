@@ -28,7 +28,17 @@
   <para>
    Configurable values:
    <variablelist>
-    <varlistentry><term>&lt;script name="name"&gt;</term>
+    <varlistentry><term>&lt;elementset name="name1" backend="name2"/&gt;</term>
+     <listitem>
+      <para>
+       Specifies the elementset (name1) that triggers the transform.
+       Note that the record syntax must be XML as well.
+       The 2nd element set, name2, specifies the element set that
+       is sent to the next filter in chain (backend).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry><term>&lt;script name="name"/&gt;</term>
      <listitem>
       <para>
        The full path of the XQuery script to be invoked.
@@ -36,7 +46,7 @@
       </para>
      </listitem>
     </varlistentry>
-    <varlistentry><term>&lt;record name="var"&gt;</term>
+    <varlistentry><term>&lt;record name="var"/&gt;</term>
      <listitem>
       <para>
        The name of the XQUery variable where the input XML record
@@ -68,11 +78,14 @@
 
  <refsect1><title>EXAMPLES</title>
   <para>
-   Configuration:
+   Configuration for converting MARCXML to BIBFRAME.
    <screen><![CDATA[
-    <filter type="session_shared">
-     <resultset ttl="10" max="3" restart="true"/>
-     <session ttl="30" max="100"/>
+    <filter type="xquery">
+      <elementset name="bibframe" backend="marcxml"/>
+      <script name="/usr/share/marc2bibframe/xbin/zorba3-0.xqy"/>
+      <record name="marcxmluri"/>
+      <variable name="serialization" value="rdxml"/>
+      <variable name="baseuri" value="http://base/"/>
     </filter>
 ]]>
    </screen>

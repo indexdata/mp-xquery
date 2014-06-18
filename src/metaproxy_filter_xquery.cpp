@@ -59,6 +59,8 @@ namespace metaproxy_1 {
             std::string zorba_filename;
             std::string zorba_script;
             std::string zorba_record_variable;
+            std::string elementset_input;
+            std::string elementset_output;
             Zorba *lZorba;
             XQuery_t lQuery;
         };
@@ -182,10 +184,10 @@ void yf::XQuery::process(Package &package) const
     const char *backend_schema = 0;
     const Odr_oid *backend_syntax = 0;
 
-    if (input_schema && !strcmp(input_schema, "bibframe") &&
+    if (input_schema && !strcmp(input_schema, elementset_input.c_str()) &&
         (!input_syntax || !oid_oidcmp(input_syntax, yaz_oid_recsyn_xml)))
     {
-        backend_schema = "marcxml";
+        backend_schema = elementset_output.c_str();
         backend_syntax = yaz_oid_recsyn_xml;
     }
     else
@@ -319,7 +321,20 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
     {
         if (ptr->type != XML_ELEMENT_NODE)
             continue;
-        if (!strcmp((const char *) ptr->name, "variable"))
+        if (!strcmp((const char *) ptr->name, "elementset"))
+        {
+            struct _xmlAttr *attr;
+            for (attr = ptr->properties; attr; attr = attr->next)
+                if (!strcmp((const char *) attr->name, "name"))
+                    elementset_input = mp::xml::get_text(attr->children);
+                else if (!strcmp((const char *) attr->name, "backend"))
+                    elementset_output = mp::xml::get_text(attr->children);
+                else
+                    throw mp::filter::FilterException(
+                        "Bad attribute " + std::string((const char *)
+                                                       attr->name));
+        }
+        else if (!strcmp((const char *) ptr->name, "variable"))
         {
             std::string name;
             std::string value;
