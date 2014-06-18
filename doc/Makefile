@@ -2,6 +2,8 @@
 .PHONY: check all
 .SUFFIXES: .3mp .xml .1
 
+prefix = /usr
+
 XSLTPROC_COMPILE = xsltproc --xinclude -path "."
 HTML_COMPILE = $(XSLTPROC_COMPILE) id.htmlhelp.xsl
 MAN_COMPILE = $(XSLTPROC_COMPILE) id.man.xsl
@@ -30,4 +32,8 @@ clean:
 distclean: clean
 
 check: all
+
+install:
+	mkdir -p $(DESTDIR)$(prefix)/share/man/man3
+	cp *.3mp $(DESTDIR)$(prefix)/share/man/man3/
 
