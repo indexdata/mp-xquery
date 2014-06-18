@@ -319,7 +319,7 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
     {
         if (ptr->type != XML_ELEMENT_NODE)
             continue;
-        if (!strcmp((const char *) ptr->name, "setVariable"))
+        if (!strcmp((const char *) ptr->name, "variable"))
         {
             std::string name;
             std::string value;
@@ -338,29 +338,29 @@ void yf::XQuery::configure(const xmlNode * ptr, bool test_only,
         }
         else if (!strcmp((const char *) ptr->name, "script"))
         {
-            std::string value;
+            std::string name;
             struct _xmlAttr *attr;
             for (attr = ptr->properties; attr; attr = attr->next)
-                if (!strcmp((const char *) attr->name, "value"))
-                    value = mp::xml::get_text(attr->children);
+                if (!strcmp((const char *) attr->name, "name"))
+                    name = mp::xml::get_text(attr->children);
                 else
                     throw mp::filter::FilterException(
                         "Bad attribute " + std::string((const char *)
                                                        attr->name));
-            zorba_script = value;
+            zorba_script = name;
         }
         else if (!strcmp((const char *) ptr->name, "record"))
         {
-            std::string value;
+            std::string name;
             struct _xmlAttr *attr;
             for (attr = ptr->properties; attr; attr = attr->next)
-                if (!strcmp((const char *) attr->name, "value"))
-                    value = mp::xml::get_text(attr->children);
+                if (!strcmp((const char *) attr->name, "name"))
+                    name = mp::xml::get_text(attr->children);
                 else
                     throw mp::filter::FilterException(
                         "Bad attribute " + std::string((const char *)
                                                        attr->name));
-            zorba_record_variable = value;
+            zorba_record_variable = name;
         }
         else
         {
