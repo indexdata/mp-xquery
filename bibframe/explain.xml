@@ -15,9 +15,9 @@
   </serverInfo>
 
   <databaseInfo>
-    <title lang="en" primary="true">Metaproxy SRU explain record</title>
+    <title lang="en" primary="true">BIBFRAME demo</title>
     <description lang="en" primary="true">
-      Some description of this service
+      BIBFRAME demo
     </description>
     <author>Index Data, http://www.indexdata.com</author>
     <contact>Index Data, info(at)indexdata(dot)com</contact>
@@ -224,7 +224,6 @@
     <default type="retrieveSchema">dc</default>
     <default type="recordPacking">xml</default>
 
-    <setting type="stylesheet">/xsl/sru.xsl</setting>
     <!-- <setting type="maximumRecords">1000</setting> -->
     <!-- <supports type="resultSets"></supports>  -->
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:srw="http://www.loc.gov/zing/srw/"
+		xmlns:sru="http://docs.oasis-open.org/ns/search-ws/sruResponse"
                 xmlns:dc="http://www.loc.gov/zing/srw/dcschema/v1.0/"
                 xmlns:zr="http://explain.z3950.org/dtd/2.0/"
                 xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
@@ -34,8 +35,6 @@
   <xsl:template match="zr:explain">
     <xsl:call-template name="dbinfo"/>
     <xsl:call-template name="diagnostic"/>
-    <xsl:call-template name="indexinfo"/>
-    <xsl:call-template name="relationinfo"/>
     <xsl:call-template name="searchform"/>
   </xsl:template>
 
@@ -62,16 +61,22 @@
   <xsl:template name="searchform">
     <div class="searchform">
       <form name="searchform"  method="get"> <!-- action=".." -->
-        <input type="hidden" name="version" value="1.1"/>
+        <input type="hidden" name="version" value="1.2"/>
         <input type="hidden" name="operation" value="searchRetrieve"/>
+	<input type="hidden" name="stylesheet">
+	  <xsl:attribute name="value">
+	    <xsl:value-of select="//srw:echoedExplainRequest/srw:stylesheet"/>
+	    <xsl:value-of select="//sru:echoedExplainRequest/sru:stylesheet"/>
+	  </xsl:attribute>
+	</input>
         <div class="query">
           <input type="text" name="query"/>
         </div>
         <div class="parameters">
           <xsl:text>startRecord: </xsl:text>
-          <input type="text" name="startRecord" value="1"/>
+          <input size="10" type="text" name="startRecord" value="1"/>
           <xsl:text> maximumRecords: </xsl:text>
-          <input type="text" name="maximumRecords" value="5"/>
+          <input size="10" type="text" name="maximumRecords" value="5"/>
           <xsl:text> recordSchema: </xsl:text>
           <select name="recordSchema">
           <xsl:for-each select="//zr:schemaInfo/zr:schema">
@@ -85,11 +90,7 @@
             <option value="string">string</option>
             <option value="xml">XML</option>
           </select>
-          <xsl:text> stylesheet: </xsl:text>
-          <select name="stylesheet">
-            <option value="/xsl/sru.xsl">SRU</option>
-            <option value="">NONE</option>
-          </select>
+
         </div>
 
         <div class="submit">
@@ -165,7 +166,40 @@
               <xsl:value-of select="srw:recordSchema"/>
               <xsl:text> : </xsl:text>
               <xsl:value-of select="srw:recordPacking"/>
-            </p>
+	    </p>
+	    <form name="fulllink" method="get">
+	      <input type="hidden" name="version" value="1.2"/>
+	      <input type="hidden" name="operation" value="searchRetrieve"/>
+	      <input type="hidden" name="query">
+		<xsl:attribute name="value">
+		  <xsl:value-of
+		      select="//srw:echoedSearchRetrieveRequest/srw:query"/>
+		</xsl:attribute>
+	      </input>
+	      <input type="hidden" name="recordPacking">
+		<xsl:attribute name="value">
+		  <xsl:value-of select="srw:recordPacking"/>
+		</xsl:attribute>
+	      </input>
+	      <input type="hidden" name="recordSchema">
+		<xsl:attribute name="value">
+		  <xsl:value-of select="srw:recordSchema"/>
+		</xsl:attribute>
+	      </input>
+	      <input type="hidden" name="stylesheet" value="/xsl/briefDisplay.xsl"/>
+	      <input type="hidden" name="startRecord">
+		<xsl:attribute name="value">
+		  <xsl:value-of select="srw:recordPosition"/>
+		</xsl:attribute>
+	      </input>
+	      <input type="hidden" name="maximumRecords" value="1"/>
+	      <input type="submit">
+		<xsl:attribute name="value">
+		  <xsl:text>Full Record </xsl:text>
+		  <xsl:value-of select="srw:recordPosition"/>
+		</xsl:attribute>
+	      </input>
+	    </form>
             <p>
               <pre>
                 <xsl:value-of select="srw:recordData"/>
@@ -176,41 +210,5 @@
       </xsl:for-each>
     </div>
   </xsl:template>
-
-  <xsl:template name="displayscan">
-    <div class="scanresults">
-
-      <xsl:for-each select="srw:terms">
-        <xsl:for-each select="srw:term">
-          <div class="term">
-
-              <!-- <xsl:text>Term: </xsl:text> -->
-              <xsl:for-each select="srw:displayTerm">
-                <xsl:value-of select="."/>
-                <xsl:text> : </xsl:text>
-              </xsl:for-each>
-
-              <xsl:for-each select="srw:value">
-                <xsl:value-of select="."/>
-              </xsl:for-each>
-
-              <xsl:for-each select="srw:numberOfRecords">
-                <xsl:text> (</xsl:text>
-                <xsl:value-of select="."/>
-                <xsl:text>)</xsl:text>
-              </xsl:for-each>
-
-              <xsl:for-each select="srw:extraTermData">
-                <xsl:text> - </xsl:text>
-                <xsl:value-of select="."/>
-              </xsl:for-each>
-
-          </div>
-        </xsl:for-each>
-      </xsl:for-each>
-
-    </div>
-  </xsl:template>
-
 
 </xsl:stylesheet>
