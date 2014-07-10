@@ -5,11 +5,46 @@
                 xmlns:dc="http://www.loc.gov/zing/srw/dcschema/v1.0/"
                 xmlns:zr="http://explain.z3950.org/dtd/2.0/"
                 xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		xmlns:bf="http://bibframe.org/vocab/"
                 version="1.0">
 
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 
   <xsl:template match="text()"/>
+
+  <xsl:template match="rdf:RDF">
+    <table>
+      <xsl:if test="bf:Work/bf:creator">
+	<xsl:variable
+	    name="resource" select="bf:Work/bf:creator/@rdf:resource"/>
+	<tr>
+	  <td>Author</td>
+	  <td>
+	    <xsl:value-of select="//bf:Person[@rdf:about=$resource]/bf:label"/>
+	  </td>
+	</tr>
+      </xsl:if>
+      <xsl:if test="bf:Work/bf:workTitle">
+	<xsl:variable
+	    name="resource" select="bf:Work/bf:workTitle/@rdf:resource"/>
+	<tr>
+	  <td>Work Title</td>
+	  <td>
+	    <xsl:value-of select="//bf:Title[@rdf:about=$resource]/bf:titleValue"/>
+	  </td>
+	</tr>
+      </xsl:if>
+      <xsl:if test="//bf:Instance/bf:providerStatement">
+      <tr>
+	<td>Date/Place</td>
+	<td>
+	  <xsl:value-of select="//bf:Instance/bf:providerStatement"/>
+	</td>
+      </tr>
+      </xsl:if>
+    </table>
+  </xsl:template>
 
   <xsl:template match="/">
     <xsl:call-template name="html"/>
@@ -167,44 +202,89 @@
               <xsl:text> : </xsl:text>
               <xsl:value-of select="srw:recordPacking"/>
 	    </p>
-	    <form name="fulllink" method="get">
-	      <input type="hidden" name="version" value="1.2"/>
-	      <input type="hidden" name="operation" value="searchRetrieve"/>
-	      <input type="hidden" name="query">
-		<xsl:attribute name="value">
-		  <xsl:value-of
-		      select="//srw:echoedSearchRetrieveRequest/srw:query"/>
-		</xsl:attribute>
-	      </input>
-	      <input type="hidden" name="recordPacking">
-		<xsl:attribute name="value">
-		  <xsl:value-of select="srw:recordPacking"/>
-		</xsl:attribute>
-	      </input>
-	      <input type="hidden" name="recordSchema">
-		<xsl:attribute name="value">
-		  <xsl:value-of select="srw:recordSchema"/>
-		</xsl:attribute>
-	      </input>
-	      <input type="hidden" name="stylesheet" value="/xsl/briefDisplay.xsl"/>
-	      <input type="hidden" name="startRecord">
-		<xsl:attribute name="value">
-		  <xsl:value-of select="srw:recordPosition"/>
-		</xsl:attribute>
-	      </input>
-	      <input type="hidden" name="maximumRecords" value="1"/>
-	      <input type="submit">
-		<xsl:attribute name="value">
-		  <xsl:text>Full Record </xsl:text>
-		  <xsl:value-of select="srw:recordPosition"/>
-		</xsl:attribute>
-	      </input>
-	    </form>
             <p>
-              <pre>
-                <xsl:value-of select="srw:recordData"/>
-              </pre>
-            </p>
+	      <xsl:if test="srw:recordPacking='string'">
+		<pre>
+		  <xsl:value-of select="srw:recordData"/>
+		</pre>
+	      </xsl:if>
+	      <xsl:if test="srw:recordPacking='xml'">
+		<xsl:choose>
+		  <xsl:when test="srw:recordSchema='marcxml'">
+		    <xsl:text>MARCXML</xsl:text>
+		  </xsl:when>
+		  <xsl:when test="srw:recordSchema='bibframe'">
+		    <xsl:apply-templates select="srw:recordData"/>
+		  </xsl:when>
+		</xsl:choose>
+	      </xsl:if>
+
+	      <form name="fulllink" method="get">
+		<input type="hidden" name="version" value="1.2"/>
+		<input type="hidden" name="operation" value="searchRetrieve"/>
+		<input type="hidden" name="query">
+		  <xsl:attribute name="value">
+		    <xsl:value-of
+			select="//srw:echoedSearchRetrieveRequest/srw:query"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="recordPacking">
+		  <xsl:attribute name="value">
+		    <xsl:value-of select="srw:recordPacking"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="recordSchema">
+		  <xsl:attribute name="value">
+		    <xsl:value-of select="srw:recordSchema"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="stylesheet" value="/xsl/briefDisplay.xsl"/>
+		<input type="hidden" name="startRecord">
+		  <xsl:attribute name="value">
+		    <xsl:value-of select="srw:recordPosition"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="maximumRecords" value="1"/>
+		<input type="submit">
+		  <xsl:attribute name="value">
+		    <xsl:text>Full Record </xsl:text>
+		    <xsl:value-of select="srw:recordPosition"/>
+		  </xsl:attribute>
+		</input>
+	      </form>
+	      <form name="rawlink" method="get">
+		<input type="hidden" name="version" value="1.2"/>
+		<input type="hidden" name="operation" value="searchRetrieve"/>
+		<input type="hidden" name="query">
+		  <xsl:attribute name="value">
+		    <xsl:value-of
+			select="//srw:echoedSearchRetrieveRequest/srw:query"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="recordPacking">
+		  <xsl:attribute name="value">
+		    <xsl:value-of select="srw:recordPacking"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="recordSchema">
+		  <xsl:attribute name="value">
+		    <xsl:value-of select="srw:recordSchema"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="startRecord">
+		  <xsl:attribute name="value">
+		    <xsl:value-of select="srw:recordPosition"/>
+		  </xsl:attribute>
+		</input>
+		<input type="hidden" name="maximumRecords" value="1"/>
+		<input type="submit">
+		  <xsl:attribute name="value">
+		    <xsl:text>Raw Record </xsl:text>
+		    <xsl:value-of select="srw:recordPosition"/>
+		  </xsl:attribute>
+		</input>
+	      </form>
+	    </p>
           </div>
         </xsl:for-each>
       </xsl:for-each>
