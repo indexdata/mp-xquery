@@ -174,16 +174,16 @@
   </indexInfo>
 
   <schemaInfo>
+    <schema identifier="http://www.loc.gov/zing/srw/bibframe"
+            name="bibframe"
+            retrieve="true">
+      <title lang="en">BIBFRAME</title>
+    </schema>
     <schema identifier="info:srw/schema/1/marcxml-v1.1"
             location="http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"
             name="marcxml"
             retrieve="true">
       <title lang="en">MARCXML</title>
-    </schema>
-    <schema identifier="http://www.loc.gov/zing/srw/bibframe"
-            name="bibframe"
-            retrieve="true">
-      <title lang="en">BIBFRAME</title>
     </schema>
   </schemaInfo>
 

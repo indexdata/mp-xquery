@@ -15,34 +15,34 @@
 
   <xsl:template match="rdf:RDF">
     <table>
-      <xsl:if test="bf:Work/bf:creator">
+      <xsl:for-each select="bf:Work/bf:creator">
 	<xsl:variable
-	    name="resource" select="bf:Work/bf:creator/@rdf:resource"/>
+	    name="resource" select="./@rdf:resource"/>
 	<tr>
 	  <td>Author</td>
 	  <td>
-	    <xsl:value-of select="//bf:Person[@rdf:about=$resource]/bf:label"/>
+	    <xsl:value-of select="//*[@rdf:about=$resource]/bf:label"/>
 	  </td>
 	</tr>
-      </xsl:if>
-      <xsl:if test="bf:Work/bf:workTitle">
+      </xsl:for-each>
+      <xsl:for-each select="bf:Work/bf:workTitle">
 	<xsl:variable
-	    name="resource" select="bf:Work/bf:workTitle/@rdf:resource"/>
+	    name="resource" select="./@rdf:resource"/>
 	<tr>
 	  <td>Work Title</td>
 	  <td>
-	    <xsl:value-of select="//bf:Title[@rdf:about=$resource]/bf:titleValue"/>
+	    <xsl:value-of select="//*[@rdf:about=$resource]/bf:titleValue"/>
 	  </td>
 	</tr>
-      </xsl:if>
-      <xsl:if test="//bf:Instance/bf:providerStatement">
-      <tr>
-	<td>Date/Place</td>
-	<td>
-	  <xsl:value-of select="//bf:Instance/bf:providerStatement"/>
-	</td>
-      </tr>
-      </xsl:if>
+      </xsl:for-each>
+      <xsl:for-each select="bf:Instance/bf:providerStatement">
+	<tr>
+	  <td>Date/Place</td>
+	  <td>
+	    <xsl:value-of select="."/>
+	  </td>
+	</tr>
+      </xsl:for-each>
     </table>
   </xsl:template>
 
@@ -122,8 +122,8 @@
           </select>
           <xsl:text> recordPacking: </xsl:text>
           <select name="recordPacking">
-            <option value="string">string</option>
             <option value="xml">XML</option>
+            <option value="string">string</option>
           </select>
 
         </div>
@@ -238,7 +238,7 @@
 		    <xsl:value-of select="srw:recordSchema"/>
 		  </xsl:attribute>
 		</input>
-		<input type="hidden" name="stylesheet" value="/xsl/briefDisplay.xsl"/>
+		<input type="hidden" name="stylesheet" value="/xsl/fullDisplay.xsl"/>
 		<input type="hidden" name="startRecord">
 		  <xsl:attribute name="value">
 		    <xsl:value-of select="srw:recordPosition"/>
