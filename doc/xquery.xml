@@ -49,7 +49,7 @@
     <varlistentry><term>&lt;record name="var"/&gt;</term>
      <listitem>
       <para>
-       The name of the XQUery variable where the input XML record
+       The name of the XQuery variable where the input XML record
        is stored.
        This is required and should be set exactly once.
       </para>
