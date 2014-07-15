@@ -14,7 +14,8 @@
       <filter type="http_file">
         <area>
           <documentroot>xsl</documentroot>
-          <prefix>/xsl</prefix>
+          <prefix></prefix>
+          <passthru>true</passthru>
         </area>
       </filter>
       <filter type="sru_z3950">

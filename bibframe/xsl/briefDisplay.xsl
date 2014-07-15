@@ -238,7 +238,7 @@
 		    <xsl:value-of select="srw:recordSchema"/>
 		  </xsl:attribute>
 		</input>
-		<input type="hidden" name="stylesheet" value="/xsl/fullDisplay.xsl"/>
+		<input type="hidden" name="stylesheet" value="/fullDisplay.xsl"/>
 		<input type="hidden" name="startRecord">
 		  <xsl:attribute name="value">
 		    <xsl:value-of select="srw:recordPosition"/>
