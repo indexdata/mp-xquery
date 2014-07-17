@@ -19,7 +19,7 @@
 	<xsl:variable
 	    name="resource" select="./@rdf:resource"/>
 	<tr>
-	  <td>Author</td>
+	  <td><b>Creator:</b></td>
 	  <td>
 	    <xsl:value-of select="//*[@rdf:about=$resource]/bf:label"/>
 	  </td>
@@ -29,7 +29,7 @@
 	<xsl:variable
 	    name="resource" select="./@rdf:resource"/>
 	<tr>
-	  <td>Work Title</td>
+	  <td><b>Work Title:</b></td>
 	  <td>
 	    <xsl:value-of select="//*[@rdf:about=$resource]/bf:titleValue"/>
 	  </td>
@@ -37,7 +37,7 @@
       </xsl:for-each>
       <xsl:for-each select="bf:Instance/bf:providerStatement">
 	<tr>
-	  <td>Date/Place</td>
+	  <td><b>Date/Place:</b></td>
 	  <td>
 	    <xsl:value-of select="."/>
 	  </td>
@@ -54,7 +54,7 @@
     <html>
       <head>
         <title>
-          <xsl:value-of select="//zr:explain/zr:databaseInfo/zr:title"/>
+          BIBFRAME demo
         </title>
         <link href="css.css" rel="stylesheet"
               type="text/css" media="screen, all"/>
@@ -68,9 +68,8 @@
   </xsl:template>
 
   <xsl:template match="zr:explain">
-    <xsl:call-template name="dbinfo"/>
     <xsl:call-template name="diagnostic"/>
-    <xsl:call-template name="searchform"/>
+    <xsl:call-template name="searchform1"/>
   </xsl:template>
 
   <xsl:template match="srw:searchRetrieveResponse">
@@ -93,7 +92,29 @@
     </div>
   </xsl:template>
 
-  <xsl:template name="searchform">
+  <xsl:template name="searchform1">
+    <div class="searchform">
+      <form name="searchform"  method="get"> <!-- action=".." -->
+        <input type="hidden" name="version" value="1.2"/>
+        <input type="hidden" name="operation" value="searchRetrieve"/>
+	<input type="hidden" name="stylesheet">
+	  <xsl:attribute name="value">
+	    <xsl:value-of select="//srw:echoedExplainRequest/srw:stylesheet"/>
+	    <xsl:value-of select="//sru:echoedExplainRequest/sru:stylesheet"/>
+	  </xsl:attribute>
+	</input>
+	<input type="text" name="query"/>
+	<input name="version" value="1.2" type="hidden"/>
+	<input name="operation" value="searchRetrieve" type="hidden"/>
+	<input name="startRecord" value="1" type="hidden"/>
+	<input name="maximumRecords" value="10" type="hidden"/>
+	<input name="recordSchema" value="bibframe" type="hidden"/>
+	<input type="submit" value="submit"/>
+      </form>
+    </div>
+  </xsl:template>
+
+  <xsl:template name="searchform2">
     <div class="searchform">
       <form name="searchform"  method="get"> <!-- action=".." -->
         <input type="hidden" name="version" value="1.2"/>
@@ -176,6 +197,82 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="new-search">
+    <form name="newsearch" method="get">
+      <input type="hidden" name="version">
+	<xsl:attribute name="value">
+	  <xsl:value-of
+	      select="//srw:echoedSearchRetrieveRequest/srw:version"/>
+	</xsl:attribute>
+      </input>
+      <input type="hidden" name="stylesheet">
+	<xsl:attribute name="value">
+	  <xsl:value-of
+	      select="//srw:echoedSearchRetrieveRequest/srw:stylesheet"/>
+	</xsl:attribute>
+      </input>
+
+      <input type="submit">
+	<xsl:attribute name="value">
+	  <xsl:text>New Query</xsl:text>
+	</xsl:attribute>
+      </input>
+    </form>
+  </xsl:template>
+
+  <xsl:template name="next-records">
+    <xsl:for-each select="srw:nextRecordPosition">
+      <form name="nextlink" method="get">
+	<input type="hidden" name="version">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:version"/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="operation" value="searchRetrieve"/>
+	<input type="hidden" name="query">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:query"/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="recordPacking">
+	  <xsl:attribute name="value">
+	    <xsl:value-of select="srw:recordPacking"/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="recordSchema">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:recordSchema"/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="stylesheet">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:stylesheet"/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="startRecord">
+	  <xsl:attribute name="value">
+	    <xsl:value-of select="."/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="maximumRecords">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:maximumRecords"/>
+	  </xsl:attribute>
+	</input>
+	<input type="submit">
+	  <xsl:attribute name="value">
+	    <xsl:text>Next</xsl:text>
+	  </xsl:attribute>
+	</input>
+      </form>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="displaysearch">
     <div class="searchresults">
       <xsl:for-each select="srw:numberOfRecords">
@@ -184,24 +281,19 @@
           <xsl:value-of select="."/>
         </h4>
       </xsl:for-each>
-      <xsl:for-each select="srw:nextRecordPosition">
-        <h4>
-          <xsl:text>Next Record Position: </xsl:text>
-          <xsl:value-of select="."/>
-         </h4>
-      </xsl:for-each>
+
+      <xsl:call-template name="new-search"/>
+
+      <xsl:call-template name="next-records"/>
 
       <xsl:for-each select="srw:records">
         <xsl:for-each select="srw:record">
+	  <hr/>
           <div class="record">
-            <p>
-              <xsl:text>Record: </xsl:text>
+            <h4>
+              <xsl:text>Record </xsl:text>
               <xsl:value-of select="srw:recordPosition"/>
-              <xsl:text> : </xsl:text>
-              <xsl:value-of select="srw:recordSchema"/>
-              <xsl:text> : </xsl:text>
-              <xsl:value-of select="srw:recordPacking"/>
-	    </p>
+	    </h4>
             <p>
 	      <xsl:if test="srw:recordPacking='string'">
 		<pre>
@@ -218,9 +310,18 @@
 		  </xsl:when>
 		</xsl:choose>
 	      </xsl:if>
-
+	    </p>
+	  </div>
+	  <table>
+	    <tr>
+	      <td>
 	      <form name="fulllink" method="get">
-		<input type="hidden" name="version" value="1.2"/>
+		<input type="hidden" name="version">
+		  <xsl:attribute name="value">
+		    <xsl:value-of
+			select="//srw:echoedSearchRetrieveRequest/srw:version"/>
+		  </xsl:attribute>
+		</input>
 		<input type="hidden" name="operation" value="searchRetrieve"/>
 		<input type="hidden" name="query">
 		  <xsl:attribute name="value">
@@ -252,8 +353,15 @@
 		  </xsl:attribute>
 		</input>
 	      </form>
+	      </td>
+	      <td>
 	      <form name="rawlink" method="get">
-		<input type="hidden" name="version" value="1.2"/>
+		<input type="hidden" name="version">
+		  <xsl:attribute name="value">
+		    <xsl:value-of
+			select="//srw:echoedSearchRetrieveRequest/srw:version"/>
+		  </xsl:attribute>
+		</input>
 		<input type="hidden" name="operation" value="searchRetrieve"/>
 		<input type="hidden" name="query">
 		  <xsl:attribute name="value">
@@ -284,10 +392,14 @@
 		  </xsl:attribute>
 		</input>
 	      </form>
-	    </p>
-          </div>
+	      </td>
+	    </tr>
+	  </table>
         </xsl:for-each>
       </xsl:for-each>
+
+      <xsl:call-template name="next-records"/>
+
     </div>
   </xsl:template>
 

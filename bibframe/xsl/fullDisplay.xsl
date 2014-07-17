@@ -16,11 +16,11 @@
   <xsl:template match="rdf:RDF">
     <table>
       <xsl:for-each select="bf:*">
-	<tr><td><xsl:value-of select="name(.)"/></td></tr>
+	<tr><td><b><xsl:value-of select="name(.)"/>:</b></td></tr>
 	<xsl:for-each select="./*">
 	  <xsl:variable name="resource" select="./@rdf:resource"/>
 	  <tr>
-	    <td/><td><xsl:value-of select="name(.)"/></td>
+	    <td/><td><b><xsl:value-of select="name(.)"/>:</b></td>
 	    <td/><td>
 	      <xsl:if test="$resource">
 		<xsl:variable name="rvalue"
@@ -49,7 +49,7 @@
   <xsl:template name="html">
     <html>
       <head>
-        <title>Full Display</title>
+        <title>BIBFRAME Full Display</title>
         <link href="css.css" rel="stylesheet"
               type="text/css" media="screen, all"/>
       </head>
@@ -90,14 +90,10 @@
       <xsl:for-each select="srw:records">
         <xsl:for-each select="srw:record">
           <div class="record">
-            <p>
-              <xsl:text>Record: </xsl:text>
+            <h4>
+              <xsl:text>Record </xsl:text>
               <xsl:value-of select="srw:recordPosition"/>
-              <xsl:text> : </xsl:text>
-              <xsl:value-of select="srw:recordSchema"/>
-              <xsl:text> : </xsl:text>
-              <xsl:value-of select="srw:recordPacking"/>
-	    </p>
+	    </h4>
             <p>
 	      <xsl:if test="srw:recordPacking='string'">
 		<pre>
@@ -116,7 +112,12 @@
 	      </xsl:if>
 
 	      <form name="rawlink" method="get">
-		<input type="hidden" name="version" value="1.2"/>
+		<input type="hidden" name="version">
+		  <xsl:attribute name="value">
+		    <xsl:value-of
+			select="//srw:echoedSearchRetrieveRequest/srw:version"/>
+		  </xsl:attribute>
+		</input>
 		<input type="hidden" name="operation" value="searchRetrieve"/>
 		<input type="hidden" name="query">
 		  <xsl:attribute name="value">
