@@ -69,7 +69,7 @@
 
   <xsl:template match="zr:explain">
     <xsl:call-template name="diagnostic"/>
-    <xsl:call-template name="searchform1"/>
+    <xsl:call-template name="searchform-simple"/>
   </xsl:template>
 
   <xsl:template match="srw:searchRetrieveResponse">
@@ -92,7 +92,7 @@
     </div>
   </xsl:template>
 
-  <xsl:template name="searchform1">
+  <xsl:template name="searchform-simple">
     <div class="searchform">
       <form name="searchform"  method="get"> <!-- action=".." -->
         <input type="hidden" name="version" value="1.2"/>
@@ -114,7 +114,7 @@
     </div>
   </xsl:template>
 
-  <xsl:template name="searchform2">
+  <xsl:template name="searchform-full">
     <div class="searchform">
       <form name="searchform"  method="get"> <!-- action=".." -->
         <input type="hidden" name="version" value="1.2"/>
@@ -197,7 +197,37 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template name="new-search">
+  <xsl:template name="searchform-refine">
+    <div class="searchform">
+      <form name="searchform"  method="get"> <!-- action=".." -->
+	<input type="hidden" name="version">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:version"/>
+	  </xsl:attribute>
+	</input>
+	<input type="hidden" name="stylesheet">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:stylesheet"/>
+	  </xsl:attribute>
+	</input>
+	<input type="text" name="query">
+	  <xsl:attribute name="value">
+	    <xsl:value-of
+		select="//srw:echoedSearchRetrieveRequest/srw:query"/>
+	  </xsl:attribute>
+	</input>
+	<input name="operation" value="searchRetrieve" type="hidden"/>
+	<input name="startRecord" value="1" type="hidden"/>
+	<input name="maximumRecords" value="10" type="hidden"/>
+	<input name="recordSchema" value="bibframe" type="hidden"/>
+	<input type="submit" value="submit"/>
+      </form>
+    </div>
+  </xsl:template>
+
+  <xsl:template name="new-search-link">
     <form name="newsearch" method="get">
       <input type="hidden" name="version">
 	<xsl:attribute name="value">
@@ -282,7 +312,7 @@
         </h4>
       </xsl:for-each>
 
-      <xsl:call-template name="new-search"/>
+      <xsl:call-template name="searchform-refine"/>
 
       <xsl:call-template name="next-records"/>
 
