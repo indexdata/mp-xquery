@@ -31,8 +31,8 @@ marcxml_raw.patch
 -----------------
 zorba3-0.xqy must be patched before it can be used by Metaproxy's XQuery
 module. This is because zorba3-0.xqy at this stage do not allow
-"in-memory" conversion of records. For this reason patch zorba3-0.xqy as
-follows once before Metaproxy uses it:
+"in-memory" conversion of records. For this reason, patch zorba3-0.xqy as
+follows:
   cd marc2bibframe/xbin
   patch < ~pathto/marcxml_raw.patch
 
@@ -58,7 +58,8 @@ files are located in /usr/share/bibframe/xsl , then http_file would hold
       <filter type="http_file">
         <area>
           <documentroot>/usr/share/bibframe/xsl</documentroot>
-          <prefix>/xsl</prefix>
+          <prefix></prefix>
+          <passthru>true</passthru>
         </area>
       </filter>
 
