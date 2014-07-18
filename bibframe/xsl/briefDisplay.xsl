@@ -35,7 +35,7 @@
 	  </td>
 	</tr>
       </xsl:for-each>
-      <xsl:for-each select="bf:Instance/bf:providerStatement">
+      <xsl:for-each select="bf:Instance[1]/bf:providerStatement">
 	<tr>
 	  <td><b>Date/Place:</b></td>
 	  <td>
