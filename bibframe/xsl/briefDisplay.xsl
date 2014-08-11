@@ -17,21 +17,21 @@
     <table>
       <xsl:for-each select="bf:Work/bf:creator">
 	<xsl:variable
-	    name="resource" select="./@rdf:resource"/>
+	    name="resource" select="./@rdf:nodeID"/>
 	<tr>
 	  <td><b>Creator:</b></td>
 	  <td>
-	    <xsl:value-of select="//*[@rdf:about=$resource]/bf:label"/>
+	    <xsl:value-of select="//*[@rdf:nodeID=$resource]/bf:label"/>
 	  </td>
 	</tr>
       </xsl:for-each>
       <xsl:for-each select="bf:Work/bf:workTitle">
 	<xsl:variable
-	    name="resource" select="./@rdf:resource"/>
+	    name="resource" select="./@rdf:nodeID"/>
 	<tr>
 	  <td><b>Work Title:</b></td>
 	  <td>
-	    <xsl:value-of select="//*[@rdf:about=$resource]/bf:titleValue"/>
+	    <xsl:value-of select="//*[@rdf:nodeID=$resource]/bf:titleValue"/>
 	  </td>
 	</tr>
       </xsl:for-each>

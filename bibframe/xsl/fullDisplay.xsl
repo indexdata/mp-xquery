@@ -19,6 +19,7 @@
 	<tr><td><b><xsl:value-of select="name(.)"/>:</b></td></tr>
 	<xsl:for-each select="./*">
 	  <xsl:variable name="resource" select="./@rdf:resource"/>
+	  <xsl:variable name="nodeid" select="./@rdf:nodeID"/>
 	  <tr>
 	    <td/><td><b><xsl:value-of select="name(.)"/>:</b></td>
 	    <td/><td>
@@ -31,6 +32,18 @@
 		  </xsl:when>
 		  <xsl:otherwise>
 		    <xsl:value-of select="$resource"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:if>
+	      <xsl:if test="$nodeid">
+		<xsl:variable name="rvalue"
+			      select="//*[@rdf:nodeID=$nodeid]/*[1]"/>
+		<xsl:choose>
+		  <xsl:when test="$rvalue">
+		    <xsl:value-of select="$rvalue"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="$nodeid"/>
 		  </xsl:otherwise>
 		</xsl:choose>
 	      </xsl:if>
