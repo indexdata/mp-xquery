@@ -36,7 +36,7 @@
 	<script name="/home/adam/proj/marc2bibframe/xbin/zorba3-0.xqy"/>
 	<record name="marcxmluri"/>
 	<variable name="serialization" value="rdxml"/>
-	<variable name="baseuri" value="http://base/"/>
+	<variable name="baseuri" value="http://id.loc.gov/resources/bibs/"/>
       </filter>
       <filter type="record_transform">
 	<retrievalinfo  xmlns="http://indexdata.com/yaz" version="1.0">
