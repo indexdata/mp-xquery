@@ -27,16 +27,6 @@ of marc2bibframe . Do not move zorba3-0.xqy from its place within the
 marc2bibframe directory as other files are referred to and their relative
 location must be preserved.
 
-marcxml_raw.patch
------------------
-zorba3-0.xqy must be patched before it can be used by Metaproxy's XQuery
-module. This is because zorba3-0.xqy at this stage do not allow
-"in-memory" conversion of records. For this reason, patch zorba3-0.xqy as
-follows:
-  cd marc2bibframe/xbin
-  patch < ~pathto/marcxml_raw.patch
-
-
 cql2pqf.txt
 -----------
 Contains a simple DC/CQL profile for driving a CQL to RPN conversion.
