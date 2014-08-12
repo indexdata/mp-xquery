@@ -11,17 +11,17 @@ Installation
 ------------
 
 Before these files can used, Metaproxy and the XQuery module must be
-installed. This is the RPM: mp-xquery
+installed.
 
-This package depend on other packages: metaproxy, libmetaproxy6, libyaz5,
-zorba, etc.
+Metaproxy and XQuery package depend on other packages: libmetaproxy6,
+libyaz5, zorba, etc.
 
 These packages can be auto-fetched by adding the Index Data YUM repository.
 Refer to http://ftp.indexdata.dk/pub/yaz/redhat/centos/6/README
 for more information.
 
 When this repository is enabled, the following command should suffice:
-  sudo yum install mp-xquery
+  sudo yum install mp-xquery metaproxy
 
 
 config.xml
