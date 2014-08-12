@@ -16,40 +16,64 @@
   <xsl:template match="rdf:RDF">
     <table>
       <xsl:for-each select="bf:*">
-	<tr><td><b><xsl:value-of select="name(.)"/>:</b></td></tr>
+	<tr><td><b><xsl:value-of select="name(.)"/>:</b>
+	<xsl:variable name="n" select="./@rdf:nodeID"/>
+	<xsl:if test="$n">
+	  (<xsl:value-of select="$n"/>)
+	</xsl:if>
+	</td></tr>
 	<xsl:for-each select="./*">
-	  <xsl:variable name="resource" select="./@rdf:resource"/>
-	  <xsl:variable name="nodeid" select="./@rdf:nodeID"/>
-	  <tr>
-	    <td/><td><b><xsl:value-of select="name(.)"/>:</b></td>
-	    <td/><td>
-	      <xsl:if test="$resource">
-		<xsl:variable name="rvalue"
-			      select="//*[@rdf:about=$resource]/*[1]"/>
-		<xsl:choose>
-		  <xsl:when test="$rvalue">
-		    <xsl:value-of select="$rvalue"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:value-of select="$resource"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-	      </xsl:if>
-	      <xsl:if test="$nodeid">
-		<xsl:variable name="rvalue"
-			      select="//*[@rdf:nodeID=$nodeid]/*[1]"/>
-		<xsl:choose>
-		  <xsl:when test="$rvalue">
-		    <xsl:value-of select="$rvalue"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:value-of select="$nodeid"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-	      </xsl:if>
-	      <xsl:value-of select="."/>
+	  <xsl:variable name="lang" select="./@xml:lang"/>
+	  <xsl:if test="not($lang='x-bf-hashable')">
+	    <xsl:variable name="resource" select="./@rdf:resource"/>
+	    <xsl:variable name="nodeid" select="./@rdf:nodeID"/>
+	    <tr>
+	      <td/>
+	      <td>
+		<b><xsl:value-of select="name(.)"/>:</b>
+	      </td>
+	      <td/><td>
+	      <xsl:choose>
+		<xsl:when test="$resource">
+		  <xsl:variable name="rvalue"
+				select="//*[@rdf:about=$resource]/*[1]"/>
+		  <xsl:choose>
+		    <xsl:when test="$rvalue">
+		      <xsl:value-of select="$rvalue"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <a>
+			<xsl:attribute name="href">
+			  <xsl:value-of select="$resource"/>
+			</xsl:attribute>
+			<xsl:value-of select="$resource"/>
+		      </a>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:when>
+		<xsl:when test="$nodeid">
+		  <xsl:variable name="rvalue"
+				select="//*[@rdf:nodeID=$nodeid]/*[1]"/>
+		  <xsl:choose>
+		    <xsl:when test="$rvalue">
+		      <xsl:value-of select="$rvalue"/>
+		      (<xsl:value-of select="$nodeid"/>)
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="$nodeid"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:when>
+		<xsl:when test="bf:Identifier">
+		  <xsl:value-of select="bf:Identifier/bf:identifierValue"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="."/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </td>
-	  </tr>
+	    </tr>
+	  </xsl:if>
 	</xsl:for-each>
       </xsl:for-each>
     </table>
