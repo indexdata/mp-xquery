@@ -24,7 +24,7 @@ set.bib1 = 1.2.840.10003.3.1
 # Index info
 index.cql.serverChoice = 1=1010 
 index.cql.all = 1=1010 
-index.rec.id = 1=12 4=3 
+index.rec.id = 1=12
 index.dc.title = 1=4 
 index.dc.creator = 1=1003 
 index.dc.subject = 1=47 
