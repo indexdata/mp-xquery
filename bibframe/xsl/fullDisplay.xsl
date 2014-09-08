@@ -34,6 +34,23 @@
 	      </td>
 	      <td/><td>
 	      <xsl:choose>
+		<xsl:when test="name(.) = 'bf:publication' or name(.) = 'bf:distribution' or name(.) = 'manufacture' or name(.) = 'production' or name(.) = 'provider'">
+		  <xsl:for-each select=".//bf:providerRole">
+		    <xsl:value-of select="."/><br/>
+		  </xsl:for-each>
+		  <xsl:for-each select=".//bf:providerName">
+		    Name: <xsl:value-of select="."/><br/>
+		  </xsl:for-each>
+		  <xsl:for-each select=".//bf:providerPlace">
+		    Place: <xsl:value-of select="."/><br/>
+		  </xsl:for-each>
+		  <xsl:for-each select=".//bf:providerDate">
+		    <xsl:value-of select="."/><br/>
+		  </xsl:for-each>
+		  <xsl:for-each select=".//bf:copyrightDate">
+		    <xsl:value-of select="."/><br/>
+		  </xsl:for-each>
+		</xsl:when>
 		<xsl:when test="$resource">
 		  <xsl:variable name="rvalue"
 				select="//*[@rdf:about=$resource]/*[1]"/>
@@ -65,7 +82,9 @@
 		  </xsl:choose>
 		</xsl:when>
 		<xsl:when test="bf:Identifier">
-		  <xsl:value-of select="bf:Identifier/bf:identifierValue"/>
+		  <xsl:for-each select="bf:Identifier/*">
+		    <xsl:value-of select="."/><br/>
+		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:value-of select="."/>
