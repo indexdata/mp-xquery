@@ -39,10 +39,10 @@
 		    <xsl:value-of select="."/><br/>
 		  </xsl:for-each>
 		  <xsl:for-each select=".//bf:providerName">
-		    Name: <xsl:value-of select="."/><br/>
+		    <b>Name: </b><xsl:value-of select="."/><br/>
 		  </xsl:for-each>
 		  <xsl:for-each select=".//bf:providerPlace">
-		    Place: <xsl:value-of select="."/><br/>
+		    <b>Place: </b><xsl:value-of select="."/><br/>
 		  </xsl:for-each>
 		  <xsl:for-each select=".//bf:providerDate">
 		    <xsl:value-of select="."/><br/>
