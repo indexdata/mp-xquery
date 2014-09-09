@@ -34,7 +34,7 @@
 	      </td>
 	      <td/><td>
 	      <xsl:choose>
-		<xsl:when test="name(.) = 'bf:publication' or name(.) = 'bf:distribution' or name(.) = 'manufacture' or name(.) = 'production' or name(.) = 'provider'">
+		<xsl:when test="bf:Provider">
 		  <xsl:for-each select=".//bf:providerRole">
 		    <xsl:value-of select="."/><br/>
 		  </xsl:for-each>
