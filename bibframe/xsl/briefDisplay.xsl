@@ -17,7 +17,7 @@
     <table>
       <xsl:for-each select="bf:Work[1]/bf:creator">
 	<xsl:variable
-	    name="resource" select="./@rdf:nodeID"/>
+	    name="resource" select="@rdf:nodeID"/>
 	<tr>
 	  <td><b>Creator:</b></td>
 	  <td>
@@ -27,7 +27,7 @@
       </xsl:for-each>
       <xsl:for-each select="bf:Work[1]/bf:workTitle">
 	<xsl:variable
-	    name="resource" select="./@rdf:nodeID"/>
+	    name="resource" select="@rdf:nodeID"/>
 	<tr>
 	  <td><b>Work Title:</b></td>
 	  <td>

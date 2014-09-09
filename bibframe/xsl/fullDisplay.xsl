@@ -17,16 +17,16 @@
     <table>
       <xsl:for-each select="bf:*">
 	<tr><td><b><xsl:value-of select="name(.)"/>:</b>
-	<xsl:variable name="n" select="./@rdf:nodeID"/>
+	<xsl:variable name="n" select="@rdf:nodeID"/>
 	<xsl:if test="$n">
 	  (<xsl:value-of select="$n"/>)
 	</xsl:if>
 	</td></tr>
-	<xsl:for-each select="./*">
-	  <xsl:variable name="lang" select="./@xml:lang"/>
+	<xsl:for-each select="*">
+	  <xsl:variable name="lang" select="@xml:lang"/>
 	  <xsl:if test="not($lang='x-bf-hashable')">
-	    <xsl:variable name="resource" select="./@rdf:resource"/>
-	    <xsl:variable name="nodeid" select="./@rdf:nodeID"/>
+	    <xsl:variable name="resource" select="@rdf:resource"/>
+	    <xsl:variable name="nodeid" select="@rdf:nodeID"/>
 	    <tr>
 	      <td/>
 	      <td>
