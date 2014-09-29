@@ -83,6 +83,10 @@
 		</xsl:when>
 		<xsl:when test="bf:Identifier">
 		  <xsl:for-each select="bf:Identifier/*">
+		    <b>
+		      <xsl:value-of
+			  select="substring-after(name(.),'bf:identifier')"/>:
+		    </b>
 		    <xsl:value-of select="."/><br/>
 		  </xsl:for-each>
 		</xsl:when>
