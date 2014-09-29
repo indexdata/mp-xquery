@@ -16,7 +16,7 @@
   <xsl:template match="rdf:RDF">
     <table>
       <xsl:for-each select="bf:*">
-	<tr><td><b><xsl:value-of select="substring-after(name(.),':')"/>:</b>
+	<tr><td><b><xsl:value-of select="name(.)"/>:</b>
 	<xsl:variable name="n" select="@rdf:nodeID"/>
 	<xsl:if test="$n">
 	  (<xsl:value-of select="$n"/>)
@@ -30,7 +30,7 @@
 	    <tr>
 	      <td/>
 	      <td>
-		<b><xsl:value-of select="substring-after(name(.),':')"/>:</b>
+		<b><xsl:value-of select="name(.)"/>:</b>
 	      </td>
 	      <td/><td>
 	      <xsl:choose>
