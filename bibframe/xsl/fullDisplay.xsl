@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.loc.gov/standards/sru/bibframe/fullDisplay.xsl"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:srw="http://www.loc.gov/zing/srw/"
 		xmlns:sru="http://docs.oasis-open.org/ns/search-ws/sruResponse"
@@ -14,17 +15,22 @@
   <xsl:template match="text()"/>
 
   <xsl:template match="rdf:RDF">
+  		<xsl:variable name="base" select="bf:Work[1]/@rdf:about"/>
     <table>
       <xsl:for-each select="bf:*">
 	<tr><td><b><xsl:value-of select="name(.)"/>:</b>
 	<xsl:variable name="n" select="@rdf:nodeID"/>
 	<xsl:if test="$n">
-	  (<xsl:value-of select="$n"/>)
+	  &#160;(<a name="{$n}"><xsl:value-of select="$n"/></a>)
 	</xsl:if>
+	<xsl:if test="@rdf:about and @rdf:about != $base">
+		<xsl:variable name="bnodedid">
+		<xsl:value-of select="substring-after(@rdf:about, $base)"/>
+	</xsl:variable>&#160;(<a name="{$bnodedid}"><xsl:value-of select="$bnodedid"/></a>)</xsl:if>	
 	</td></tr>
 	<xsl:for-each select="*">
 	  <xsl:variable name="lang" select="@xml:lang"/>
-	  <xsl:if test="not($lang='x-bf-hashable')">
+	  <xsl:if test="not($lang='x-bf-hash')">
 	    <xsl:variable name="resource" select="@rdf:resource"/>
 	    <xsl:variable name="nodeid" select="@rdf:nodeID"/>
 	    <tr>
@@ -52,12 +58,14 @@
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:when test="$resource">
-		  <xsl:variable name="rvalue"
-				select="//*[@rdf:about=$resource]/*[1]"/>
+		  <xsl:variable name="rvalue" select="//*[@rdf:about=$resource]/*[1]/text()"/>
 		  <xsl:choose>
-		    <xsl:when test="$rvalue">
-		      <xsl:value-of select="$rvalue"/>
-		    </xsl:when>
+			<xsl:when test="$rvalue">
+				<xsl:value-of select="$rvalue"/>&#160;(<a>
+					<xsl:attribute name="href">
+						<xsl:value-of select="concat('#',substring-after($resource, $base))"/>
+					</xsl:attribute>
+					<xsl:value-of select="substring-after($resource, $base)"/></a>)</xsl:when>
 		    <xsl:otherwise>
 		      <a>
 			<xsl:attribute name="href">
@@ -74,7 +82,7 @@
 		  <xsl:choose>
 		    <xsl:when test="$rvalue">
 		      <xsl:value-of select="$rvalue"/>
-		      (<xsl:value-of select="$nodeid"/>)
+		      &#160;(<a><xsl:attribute name="href">#<xsl:value-of select="$nodeid"/></xsl:attribute><xsl:value-of select="$nodeid"/>)</a>
 		    </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:value-of select="$nodeid"/>
@@ -112,6 +120,7 @@
         <title>BIBFRAME Full Display</title>
         <link href="css.css" rel="stylesheet"
               type="text/css" media="screen, all"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       </head>
       <body>
         <div class="body">
