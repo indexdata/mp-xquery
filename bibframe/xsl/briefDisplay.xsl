@@ -13,6 +13,34 @@
 
   <xsl:template match="text()"/>
 
+  <xsl:template name="show-value">
+    <xsl:variable name="resource" select="@rdf:resource"/>
+    <xsl:variable name="nodeid" select="@rdf:nodeID"/>
+    <xsl:choose>
+      <xsl:when test="$resource">
+	<xsl:variable name="rvalue"
+		      select="//*[@rdf:about=$resource]/*[1]/text()"/>
+	<xsl:choose>
+	  <xsl:when test="$rvalue">
+	    <xsl:value-of select="$rvalue"/>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:when test="$nodeid">
+	<xsl:variable name="rvalue"
+		      select="//*[@rdf:nodeID=$nodeid]/*[1]"/>
+	<xsl:choose>
+	  <xsl:when test="$rvalue">
+	    <xsl:value-of select="$rvalue"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$nodeid"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="rdf:RDF">
     <table>
       <xsl:for-each select="bf:Work[1]/bf:creator">
@@ -21,17 +49,15 @@
 	<tr>
 	  <td><b>Creator:</b></td>
 	  <td>
-	    <xsl:value-of select="//*[@rdf:nodeID=$resource]/bf:label"/>
+	    <xsl:call-template name="show-value"/>
 	  </td>
 	</tr>
       </xsl:for-each>
       <xsl:for-each select="bf:Work[1]/bf:workTitle">
-	<xsl:variable
-	    name="resource" select="@rdf:nodeID"/>
 	<tr>
 	  <td><b>Work Title:</b></td>
 	  <td>
-	    <xsl:value-of select="//*[@rdf:nodeID=$resource]/bf:titleValue"/>
+	    <xsl:call-template name="show-value"/>
 	  </td>
 	</tr>
       </xsl:for-each>
