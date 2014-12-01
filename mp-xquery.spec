@@ -48,9 +48,7 @@ fi
 
 %build
 make \
-	ZORBA=/opt/zorba
-	OPT_FLAGS="-g -O" \
-	YAZ_CONFIG=/usr/bin/yaz-config \
+	ZORBA=/opt/idzorba \
 	MP_CONFIG=/usr/bin/metaproxy-config
 
 %install
