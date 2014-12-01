@@ -6,7 +6,7 @@ Release: 1.indexdata
 BuildRequires: gcc gcc-c++ pkgconfig
 BuildRequires: libmetaproxy6-devel >= 1.4.0
 BuildRequires: wget
-BuildRequires: zorba
+BuildRequires: idzorba
 License: proprietary
 Group: Applications/Internet
 Vendor: Index Data ApS <info@indexdata.dk>
@@ -20,7 +20,7 @@ Record conversion module using the Zorba XQuery library
 
 Requires: metaproxy6
 Requires: libmetaproxy6
-Requires: zorba
+Requires: idzorba
 
 %post
 if [ -d /usr/lib64/metaproxy6/modules ]; then
