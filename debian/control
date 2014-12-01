@@ -1,0 +1,15 @@
+Source: mp-xquery
+Section: web
+Standards-Version: 3.6.2
+Maintainer: Adam Dickmeiss <adam@indexdata.dk>
+Priority: extra
+Build-Depends: debhelper (>= 7),
+	libmetaproxy6-dev,
+	idzorba
+
+Package: mp-xquery
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: metaproxy module
+ record manipulation module for Metaproxy

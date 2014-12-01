@@ -1,5 +1,7 @@
 ROOT=..
 ZORBA := $(ROOT)/../zorba/zorba-3.0/build/dist
+prefix=/usr
+libdir = ${prefix}/lib
 
 ifeq "${MP_CONFIG}" ""
 MP_CONFIG := $(shell if test -x $(ROOT)/../metaproxy/metaproxy-config; then echo $(ROOT)/../metaproxy/metaproxy-config; else echo metaproxy-config; fi)
