@@ -1,4 +1,6 @@
 NAME=mp-xquery
 CENTOS_DIST="centos6"
+DEBIAN_DIST="jessie wheezy"
+UBUNTU_DIST="utopic trusty saucy precise"
 VERSION=0.2
 ARCHS=amd64
