@@ -5,8 +5,9 @@ Version: %{idmetaversion}
 Release: 1.indexdata
 BuildRequires: gcc gcc-c++ pkgconfig
 BuildRequires: libmetaproxy6-devel >= 1.4.0
-BuildRequires: wget
 BuildRequires: idzorba
+BuildRequires: libxslt
+BuildRequires: docbook-style-xsl
 License: proprietary
 Group: Applications/Internet
 Vendor: Index Data ApS <info@indexdata.dk>
