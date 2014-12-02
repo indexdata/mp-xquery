@@ -5,7 +5,10 @@ Maintainer: Adam Dickmeiss <adam@indexdata.dk>
 Priority: extra
 Build-Depends: debhelper (>= 7),
 	libmetaproxy6-dev,
-	idzorba
+	idzorba,
+	xsltproc,
+	docbook-xsl,
+	docbook-xml
 
 Package: mp-xquery
 Section: libs
