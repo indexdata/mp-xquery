@@ -1,0 +1,17 @@
+#!/bin/sh -e
+F=metaproxy_filter_xquery.so
+case "$1" in
+    purge)
+	rm -f /usr/lib/metaproxy6/modules/$F
+	if [ -f /var/run/metaproxy.pid ]; then
+            invoke-rc.d metaproxy force-reload
+	fi
+        ;;
+    remove)
+	rm -f /usr/lib/metaproxy6/modules/$F
+	if [ -f /var/run/metaproxy.pid ]; then
+            invoke-rc.d metaproxy force-reload
+	fi
+        ;;
+esac
+exit 0

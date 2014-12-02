@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+if [ "$1" != "configure" ]; then
+	exit 0
+fi
+
+F=metaproxy_filter_xquery.so
+if [ -d /usr/lib/metaproxy6/modules ]; then
+	if [ ! -e /usr/lib/metaproxy6/modules/$F ]; then
+		ln -sf /usr/lib/mp-xquery/$F /usr/lib/metaproxy6/modules
+	fi
+	if [ -f /var/run/metaproxy.pid ]; then
+		invoke-rc.d metaproxy force-reload
+	fi
+fi
+exit 0
