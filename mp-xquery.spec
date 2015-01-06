@@ -15,13 +15,12 @@ Source: mp-xquery-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 Packager: Adam Dickmeiss <adam@indexdata.dk>
 URL: http://www.indexdata.com/mp-xquery
-
-%description
-Record conversion module using the Zorba XQuery library
-
 Requires: metaproxy6
 Requires: libmetaproxy6
 Requires: idzorba
+
+%description
+Record conversion module using the Zorba XQuery library
 
 %post
 if [ -d /usr/lib64/metaproxy6/modules ]; then
