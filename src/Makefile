@@ -2,6 +2,7 @@ ROOT=..
 ZORBA := $(ROOT)/../zorba/zorba-3.0/build/dist
 prefix=/usr
 libdir = ${prefix}/lib
+VERSION := $(shell . $(ROOT)/IDMETA; echo $$VERSION)
 
 ifeq "${MP_CONFIG}" ""
 MP_CONFIG := $(shell if test -x $(ROOT)/../metaproxy/metaproxy-config; then echo $(ROOT)/../metaproxy/metaproxy-config; else echo metaproxy-config; fi)
@@ -13,7 +14,7 @@ MP_SO := metaproxy_filter_xquery.so
 
 ZORBA_LIBS := -L $(ZORBA)/lib -lzorba_simplestore
 ZORBA_CFLAGS := -I$(ZORBA)/include $(MP_CFLAGS)
-CXXFLAGS := $(ZORBA_CFLAGS) $(MP_CFLAGS) -fPIC
+CXXFLAGS := -DVERSION=\"$(VERSION)\" $(ZORBA_CFLAGS) $(MP_CFLAGS) -fPIC
 
 all: tst $(MP_SO)
 
