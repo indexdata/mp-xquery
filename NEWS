@@ -1,3 +1,17 @@
+--- 0.3 2015/01/12
+
+Use idzorba package instead of zorba package.  MPX-7
+
+Make Debian package. MPX-6
+
+Follow both resource and nodeID in simple display MPX-5
+This is to continue to show creator and workTitle when we
+use usebnodes=false in xquery filter.
+
+Nate's changes to full display
+Make internal references jumpable in HTML. Update for changes in
+hash attribute (marc2bibframe update). Add <?xml-stylesheet element.
+
 --- 0.2 2014/06/18
 
 xquery (3mp) man page.
