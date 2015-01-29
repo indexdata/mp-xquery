@@ -28,7 +28,7 @@
       </xsl:when>
       <xsl:when test="$nodeid">
 	<xsl:variable name="rvalue"
-		      select="//*[@rdf:nodeID=$nodeid]/*[1]"/>
+		      select="../../..//*[@rdf:nodeID=$nodeid]/*[1]"/>
 	<xsl:choose>
 	  <xsl:when test="$rvalue">
 	    <xsl:value-of select="$rvalue"/>
