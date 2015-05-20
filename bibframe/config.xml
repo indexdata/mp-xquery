@@ -55,7 +55,7 @@
       <filter type="virt_db">
 	<virtual>
 	  <database>Default</database>
-	  <target>z3950.loc.gov:7090/voyager</target>
+	  <target>lx2.loc.gov/LCDB_MARC8</target>
 	</virtual>
       </filter>
       <filter type="log">
