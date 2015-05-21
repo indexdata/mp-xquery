@@ -3,14 +3,16 @@ SUBDIRS = src doc
 
 all: $(SUBDIRS)
 
-$(SUBDIRS): doc/common
+CDEP=doc/common/common.ent
+
+$(SUBDIRS): $(CDEP)
 	$(MAKE) -C $@
 
-clean install: doc/common
+clean install: $(CDEP)
 	for d in $(SUBDIRS); do \
 		$(MAKE) -C $$d $@; \
 	done
 
-doc/common:
+$(CDEP):
 	git submodule init
 	git submodule update

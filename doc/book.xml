@@ -1,0 +1,111 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+[
+     <!ENTITY % local SYSTEM "local.ent">
+     %local;
+     <!ENTITY manref SYSTEM "manref.xml">
+     <!ENTITY gpl2 SYSTEM "gpl-2.0.xml">
+     <!ENTITY % idcommon SYSTEM "common/common.ent">
+     %idcommon;
+]>
+<book>
+ <bookinfo>
+  <title>MP-XQuery - User's Guide and Reference</title>
+  <authorgroup>
+   <author>
+    <firstname>Adam</firstname><surname>Dickmeiss</surname>
+   </author>
+  </authorgroup>
+  <releaseinfo>&version;</releaseinfo>
+  <copyright>
+   <year>2014-2015</year>
+   <holder>Index Data</holder>
+  </copyright>
+  <abstract>
+   <simpara>
+    This manual is part of MP-XQuery version &version;.
+    </simpara>
+   <simpara>
+    MP-XQuery is a Metaproxy module that allows record conversion
+    using W3C's XQuery language.
+   </simpara>
+   <simpara>
+    Metaproxy is covered by the GNU General Public License version 2.
+   </simpara>
+   <simpara>
+    <inlinemediaobject>
+     <imageobject>
+      <imagedata fileref="common/id.png" format="PNG"/>
+     </imageobject>
+     <imageobject>
+      <imagedata fileref="common/id.eps" format="EPS"/>
+     </imageobject>
+    </inlinemediaobject>
+   </simpara>
+  </abstract>
+ </bookinfo>
+
+ <chapter id="introduction">
+  <title>Introduction</title>
+
+  <para>
+   MP-XQuery is a module for
+   <ulink url="&url.metaproxy;">Metaproxy</ulink>.
+  </para>
+ </chapter>
+
+ <chapter id="installation">
+  <title>Installation</title>
+  <para/>
+ </chapter>
+
+ <reference id="reference">
+  <title>Reference</title>
+   <partintro id="reference-introduction">
+    <para>
+     The material in this chapter is drawn directly from the individual
+     manual entries.
+    </para>
+   </partintro>
+   &manref;
+ </reference>
+
+ <appendix id="license">
+  <title>License</title>
+  <para>
+   Copyright (C) 2014-2015 Index Data
+  </para>
+
+  <para>
+   Metaproxy is free software; you can redistribute it and/or modify it under
+   the terms of the GNU General Public License as published by the Free
+   Software Foundation; either version 2, or (at your option) any later
+   version.
+   </para>
+
+  <para>
+   Metaproxy is distributed in the hope that it will be useful, but WITHOUT ANY
+   WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+   for more details.
+  </para>
+
+  <para>
+   You should have received a copy of the GNU General Public License
+   along with Metaproxy; see the file LICENSE.  If not, write to the
+   Free Software Foundation,
+   51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+   </para>
+
+ </appendix>
+
+ &gpl2;
+</book>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: nxml
+nxml-child-indent: 1
+End:
+-->

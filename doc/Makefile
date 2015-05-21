@@ -5,14 +5,14 @@
 prefix = /usr
 
 XSLTPROC_COMPILE = xsltproc --xinclude -path "."
-HTML_COMPILE = $(XSLTPROC_COMPILE) id.htmlhelp.xsl
-MAN_COMPILE = $(XSLTPROC_COMPILE) id.man.xsl
+HTML_COMPILE = $(XSLTPROC_COMPILE) common/id.htmlhelp.xsl
+MAN_COMPILE = $(XSLTPROC_COMPILE) common/id.man.xsl
 REFFILES = xquery.xml
 MANFILES=xquery.3mp
 
 XMLFILES=book.xml manref.xml
 
-all: $(MANFILES)
+all: index.html $(MANFILES)
 
 index.html: $(XMLFILES)
 	$(HTML_COMPILE) book.xml
