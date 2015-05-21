@@ -3,10 +3,14 @@ SUBDIRS = src doc
 
 all: $(SUBDIRS)
 
-$(SUBDIRS):
+$(SUBDIRS): doc/common
 	$(MAKE) -C $@
 
-clean install:
+clean install: doc/common
 	for d in $(SUBDIRS); do \
 		$(MAKE) -C $$d $@; \
 	done
+
+doc/common:
+	git submodule init
+	git submodule update
