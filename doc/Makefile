@@ -4,6 +4,8 @@
 
 prefix = /usr
 
+VERSION=$(shell . ../IDMETA; echo $$VERSION)
+
 XSLTPROC_COMPILE = xsltproc --xinclude -path "."
 HTML_COMPILE = $(XSLTPROC_COMPILE) common/id.htmlhelp.xsl
 MAN_COMPILE = $(XSLTPROC_COMPILE) common/id.man.xsl
@@ -14,10 +16,10 @@ XMLFILES=book.xml manref.xml
 
 all: index.html $(MANFILES)
 
-index.html: $(XMLFILES)
+index.html: $(XMLFILES) local.ent
 	$(HTML_COMPILE) book.xml
 
-manref.xml: $(REFFILES)
+manref.xml: $(REFFILES) local.ent
 	rm -f manref.xml
 	for i in $(REFFILES); do \
 		xsltproc stripref.xsl $$i | sed 1d >>manref.xml; \
@@ -30,6 +32,9 @@ clean:
 	rm -f *.html *.pdf manref.xml *.hhp *.hhc $(MANFILES)
 
 distclean: clean
+
+local.ent: local.ent.in 
+	sed "s/@VERSION@/$(VERSION)/" <local.ent.in >local.ent
 
 check: all
 
