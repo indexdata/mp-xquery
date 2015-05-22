@@ -31,7 +31,7 @@
     using W3C's XQuery language.
    </simpara>
    <simpara>
-    Metaproxy is covered by the GNU General Public License version 2.
+    MP-XQuery is covered by the GNU General Public License version 2.
    </simpara>
    <simpara>
     <inlinemediaobject>
@@ -45,21 +45,103 @@
    </simpara>
   </abstract>
  </bookinfo>
-
  <chapter id="introduction">
   <title>Introduction</title>
-
   <para>
-   MP-XQuery is a module for
-   <ulink url="&url.metaproxy;">Metaproxy</ulink>.
+   MP-XQuery is a <ulink url="&url.metaproxy;">Metaproxy</ulink> module
+   that allows record conversion using
+   <ulink url="http://www.w3.org/TR/xquery/">W3C XML XQuery</ulink>.
+   The initial motivations for the module was to be able to
+   BIBFRAME records via SRU/Z39.50. By using the
+   <ulink
+       url="https://github.com/lcnetdev/marc2bibframe">
+    marc2bibframe
+    </ulink> utilities, this module can convert existing
+    MARCXML records to BIBFRAME records - on the fly - as part of retrieval.
   </para>
  </chapter>
-
  <chapter id="installation">
   <title>Installation</title>
-  <para/>
+  <para>
+   MP-XQuery is available as packages some CentOS/RHEL 6 and most recent
+   Ubuntu/Debian versions. For other systems, the module must be build
+   from source.
+  </para>
+  <sect1 id="installation.packages">
+   <title>Installing of packages</title>
+   <para>
+    You need to enable the relevant software repositories.
+    For setting up refer to one of:
+    <ulink
+	url="http://ftp.indexdata.dk/pub/mp-xquery/redhat/centos/6/README">CentOS 6</ulink>
+    ,
+    <ulink
+	url="http://ftp.indexdata.dk/pub/mp-xquery/ubuntu/README">CentOS </ulink>
+    and
+    <ulink
+	url="http://ftp.indexdata.dk/pub/mp-xquery/debian/README">Debian</ulink>
+   </para>
+   <para>
+    The package is called <literal>mp-sparql</literal> on RHEL/Debian systems.
+    Install that package and you are ready to use filter "xquery" in your
+    setup.
+   </para>
+  </sect1>
+  <sect1 id="installation.source">
+   <title>Installing from source</title>
+   <para>
+    To build from source, you need zorba and metaproxy development
+    packages. Zorba might be installed in <filename>/opt/zorba</filename>
+    as follows:
+    <screen>
+    tar zxf zorba-3.0.tar.gz
+    cd zorba-3.0
+    mkdir build
+    cd build
+    cmake -D -Wno-dev \
+        -D CMAKE_INSTALL_PREFIX=/opt/zorba \
+        -D ZORBA_SUPPRESS_SWIG:BOOL=ON  \
+        ..
+    sudo make install
+    </screen>
+    Consult the Zorba documentation for more information.
+   </para>
+   <para>
+    Metaproxy can be installed as follows:
+    <screen>
+     ./configure
+     make
+     sudo make install
+    </screen>
+    But consult the Metaproxy documentation for requirements and
+    options.
+   </para>
+   <para>
+    We are now ready to build the MP-XQuery module with:
+    <screen>
+     cd mp-xquery-version
+     make ZORBA=/opt/zorba MP_CONFIG=/usr/local/bin/mp-config
+    </screen>
+    Adjust <literal>ZORBA</literal> and <literal>MP_CONFIG</literal> values
+    above for the correct location of installed
+    Zorba and Metaproxy's mp-config respectively. MP_CONFIG can be omitted
+    if Metaproxy was installed in the system PATH.
+   </para>
+   <para>
+    You can now install the <filename>metaproxy_filter_xquery.so</filename>
+    in a directory searched by Metaproxy daemon.
+    Specifically, that's the directories
+    given by the <literal>dlpath</literal> configuration.
+   </para>
+   <para>
+    If dlpath includes <filename>/usr/lib/metaproxy6/modules</filename>,
+    the module can be installed with:
+    <screen>
+     cp src/metaproxy_filter_xquery.so /usr/lib/metaproxy6/modules
+    </screen>
+   </para>
+  </sect1>
  </chapter>
-
  <reference id="reference">
   <title>Reference</title>
    <partintro id="reference-introduction">
