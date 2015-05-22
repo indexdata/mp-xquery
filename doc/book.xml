@@ -63,7 +63,7 @@
  <chapter id="installation">
   <title>Installation</title>
   <para>
-   MP-XQuery is available as packages some CentOS/RHEL 6 and most recent
+   MP-XQuery is available as packages for CentOS/RHEL 6 and most recent
    Ubuntu/Debian versions. For other systems, the module must be build
    from source.
   </para>
