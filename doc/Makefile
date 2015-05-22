@@ -7,6 +7,7 @@ prefix = /usr
 VERSION=$(shell . ../IDMETA; echo $$VERSION)
 
 XSLTPROC_COMPILE = xsltproc --xinclude -path "."
+PDF_COMPILE = dblatex -P latex.class.options=a4paper,12pt,twoside,openright
 HTML_COMPILE = $(XSLTPROC_COMPILE) common/id.htmlhelp.xsl
 MAN_COMPILE = $(XSLTPROC_COMPILE) common/id.man.xsl
 REFFILES = xquery.xml
@@ -24,6 +25,11 @@ manref.xml: $(REFFILES) local.ent
 	for i in $(REFFILES); do \
 		xsltproc stripref.xsl $$i | sed 1d >>manref.xml; \
         done
+
+mp-xquery.pdf: $(XMLFILES) local.ent
+	rm -f mp-xquery.pdf
+	$(PDF_COMPILE) book.xml
+	mv book.pdf mp-xquery.pdf
 
 .xml.3mp:
 	$(MAN_COMPILE) $<
