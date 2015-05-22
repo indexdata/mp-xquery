@@ -68,7 +68,7 @@
    from source.
   </para>
   <sect1 id="installation.packages">
-   <title>Installing of packages</title>
+   <title>Installing packages</title>
    <para>
     You need to enable the relevant software repositories.
     For setting up refer to one of:
