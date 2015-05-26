@@ -140,6 +140,12 @@
      cp src/metaproxy_filter_xquery.so /usr/lib/metaproxy6/modules
     </screen>
    </para>
+   <note>
+    <para>
+     For RHEL/CentOS systems on 64-bit architectures, the correct paths is:
+     <filename>/usr/lib64/metaproxy6/modules</filename>.
+    </para>
+   </note>
   </sect1>
  </chapter>
  <reference id="reference">
