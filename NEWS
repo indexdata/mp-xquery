@@ -1,3 +1,14 @@
+--- 0.4 2015/05/27
+
+Add guide + reference - docbook based. Includes short instructions on
+how to compile and install the software.
+
+Change z3950.loc.gov:7090/voyager to lx2.loc.gov/LCDB_MARC8
+
+Fix identical titles for bnodes=true MPX-9
+Use 3-parent and search from there, to scope within current bibframe
+record.
+
 --- 0.3 2015/01/12
 
 Use idzorba package instead of zorba package.  MPX-7
