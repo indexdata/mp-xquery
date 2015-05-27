@@ -82,7 +82,7 @@
 	url="http://ftp.indexdata.dk/pub/mp-xquery/debian/README">Debian</ulink>
    </para>
    <para>
-    The package is called <literal>mp-sparql</literal> on RHEL/Debian systems.
+    The package is called <literal>mp-xquery</literal> on RHEL/Debian systems.
     Install that package and you are ready to use filter "xquery" in your
     setup.
    </para>
