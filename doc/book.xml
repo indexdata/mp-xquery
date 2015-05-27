@@ -52,7 +52,8 @@
    that allows record conversion using
    <ulink url="http://www.w3.org/TR/xquery/">W3C XML XQuery</ulink>.
    The initial motivations for the module was to be able to
-   BIBFRAME records via SRU/Z39.50. By using the
+   <ulink url="http://bibframe.org">BIBFRAME</ulink> records
+   via SRU/Z39.50. By using the
    <ulink
        url="https://github.com/lcnetdev/marc2bibframe">
     marc2bibframe
@@ -91,8 +92,8 @@
    <title>Installing from source</title>
    <para>
     To build from source, you need zorba and metaproxy development
-    packages. Zorba might be installed in <filename>/opt/zorba</filename>
-    as follows:
+    packages. <ulink url="http://www.zorba.io">Zorba</ulink>
+    might be installed in <filename>/opt/zorba</filename> as follows:
     <screen>
     tar zxf zorba-3.0.tar.gz
     cd zorba-3.0
