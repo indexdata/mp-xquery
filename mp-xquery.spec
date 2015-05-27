@@ -8,7 +8,7 @@ BuildRequires: libmetaproxy6-devel >= 1.4.0
 BuildRequires: idzorba
 BuildRequires: libxslt
 BuildRequires: docbook-style-xsl
-License: proprietary
+License: GPL
 Group: Applications/Internet
 Vendor: Index Data ApS <info@indexdata.dk>
 Source: mp-xquery-%{version}.tar.gz
