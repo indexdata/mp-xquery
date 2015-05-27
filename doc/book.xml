@@ -98,7 +98,7 @@
     cd zorba-3.0
     mkdir build
     cd build
-    cmake -D -Wno-dev \
+    cmake -Wno-dev \
         -D CMAKE_INSTALL_PREFIX=/opt/zorba \
         -D ZORBA_SUPPRESS_SWIG:BOOL=ON  \
         ..
