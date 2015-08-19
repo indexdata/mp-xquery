@@ -1,3 +1,11 @@
+--- 0.5 2015/08/19
+
+Move material from bibframe/README to manual
+
+Mention CentOS 7 repo in documentation
+
+Install bibframe config files in /usr/share/mp-xquery/bibframe
+
 --- 0.4 2015/05/27
 
 Add guide + reference - docbook based. Includes short instructions on

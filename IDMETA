@@ -2,4 +2,4 @@ NAME=mp-xquery
 DEBIAN_DIST="jessie wheezy"
 UBUNTU_DIST="vivid utopic trusty precise"
 CENTOS_DIST="centos6 centos7"
-VERSION=0.4
+VERSION=0.5
