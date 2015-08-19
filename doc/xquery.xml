@@ -80,13 +80,14 @@
   <para>
    Configuration for converting MARCXML to BIBFRAME.
    <screen><![CDATA[
-    <filter type="xquery">
-      <elementset name="bibframe" backend="marcxml"/>
-      <script name="/usr/share/marc2bibframe/xbin/zorba3-0.xqy"/>
-      <record name="marcxmluri"/>
-      <variable name="serialization" value="rdxml"/>
-      <variable name="baseuri" value="http://base/"/>
-    </filter>
+<filter type="xquery">
+  <elementset name="bibframe" backend="marcxml"/>
+  <script name="/usr/share/marc2bibframe/xbin/zorba3-0.xqy"/>
+  <record name="marcxmluri"/>
+  <variable name="serialization" value="rdxml"/>
+  <variable name="baseuri" value="http://id.loc.gov/resources/bibs/"/>
+  <variable name="usebnodes" value="true"/>
+</filter>
 ]]>
    </screen>
   </para>
