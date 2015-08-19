@@ -151,6 +151,80 @@
     </para>
    </note>
   </sect1>
+  <sect1>
+   <title>BIBFRAME</title>
+   <para>
+    The MARC to BIBFRAME was the primary purpose of the XQuery
+    module for Metaproxy, but generally the module is a just an alternative
+    to record_transform filter of Metaproxy which primarily performs XSLT.
+   </para>
+   <para>
+    The <filename>bibframe directory</filename> of the source tar
+    contains sample file for performing MARC to BIBFRAME conversions.
+    Upon <literal>make install</literal> these are installed to directory
+    <filename>/usr/share/mp-xquery/bibframe</filename> and they are also
+    part of the package <literal>mp-xquery</literal>.
+   </para>
+   <para>
+    <literal>config.xml</literal> is a complete Metaproxy configuration file.
+    It includes a standalone configuration that makes Metaproxy offe
+    Z39.50 and SRU support on port 9070. The modules in use are http_file
+    (to serve XSL files), sru_z3950 (SRU service), cql_rpn (CQL to RPN
+    conversion), xquery (to convert MARCXML to BIBFRAME), record_transform
+    (to convert MARC21 to MARCXML), virt_db (for database rewrite), log
+    (to perform backend logging) and, finally, z3950_client to interface
+    a Z39.50 target.
+   </para>
+   <para>
+    It is important that the XQuery module comes before the
+    "record_transform" so that the XQuery module sees XML
+    <emphasis>only</emphasis> and not ISO2709-records.
+    If it does, they will be ignored (passed through) by the XQuery module.
+   </para>
+   <para>
+    The XQuery module script name points to the full path of
+    <filename>zorba3-0.xqy</filename> part
+    of marc2bibframe . Do not move <filename>zorba3-0.xqy</filename>
+    from its place within the
+    marc2bibframe directory as other files are referred to and their relative
+    location must be preserved.
+   </para>
+   <para>
+    File <filename>cql2pqf.txt</filename> contains a simple DC/CQL profile
+    for driving a CQL to RPN conversion.
+    It is referred to from the cql_rpn filter in config.xml .
+   </para>
+   <para>
+    File <filename>explain.xml</filename> is SRU explain configuration.
+    It is referred to from the sru_z3950 filter in config.xml .
+   </para>
+   <para>
+    Directory <filename>xsl/..</filename> is client side XSL for brief -
+    and full display. These must be located so that the http_file filter
+    can fetch them. For example, if these files are located in
+    <filename>/usr/share/mp-xquery/bibframe/xsl</filename> , then
+    http_file would hold
+    <screen><![CDATA[
+      <filter type="http_file">
+        <area>
+          <documentroot>/usr/share/mp-xquery/bibframe/xsl</documentroot>
+          <prefix></prefix>
+          <passthru>true</passthru>
+        </area>
+      </filter>
+]]>
+    </screen>
+   </para>
+   <note>
+    <para>
+     Do not modify the files below <filename>/usr/share/mp-xquery</filename>.
+     They will be  overwritten by a package update and if
+     <literal>make install</literal> is executed.
+     Use them if they can be used as-is but copy them away if you want to
+     modify them (such as <filename>config.xml</filename>).
+    </para>
+   </note>
+  </sect1>
  </chapter>
  <reference id="reference">
   <title>Reference</title>
