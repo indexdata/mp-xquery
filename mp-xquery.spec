@@ -52,7 +52,7 @@ make \
 	MP_CONFIG=/usr/bin/metaproxy-config
 
 %install
-make DESTDIR=${RPM_BUILD_ROOT} libdir=%{_libdir} install
+make DESTDIR=${RPM_BUILD_ROOT} prefix=%{_prefix} libdir=%{_libdir} install
 
 %clean
 rm -fr ${RPM_BUILD_ROOT}
@@ -61,3 +61,4 @@ rm -fr ${RPM_BUILD_ROOT}
 %defattr(-,root,root)
 %{_libdir}/mp-xquery/*
 %{_mandir}/man3/xquery.*
+%{_datadir}/mp-xquery
