@@ -111,6 +111,14 @@
     Consult the Zorba documentation for more information.
    </para>
    <para>
+    Some parts of Zorba require C++ 11 features. If the local C++
+    compiler does not offer this by default, you might have to add:
+    <screen>
+     -D CMAKE_CXX_FLAGS=-std=c++11
+    </screen>
+    to the cmake invokation. This is the case on MAC OS X with MacPorts.
+   </para>
+   <para>
     Metaproxy can be installed as follows:
     <screen>
      ./configure
