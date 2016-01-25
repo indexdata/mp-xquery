@@ -33,8 +33,8 @@
       <para>
        Specifies the elementset (name1) that triggers the transform.
        Note that the record syntax must be XML as well.
-       The 2nd element set, name2, specifies the element set that
-       is sent to the next filter in chain (backend).
+       The second element set, name2, specifies the element set that
+       is sent to the next filter in the chain (backend).
       </para>
      </listitem>
     </varlistentry>
