@@ -72,7 +72,7 @@
    <title>Installing packages</title>
    <para>
     You need to enable the relevant software repositories.
-    For setting up refer to one of:
+    For setting up, refer to one of:
     <ulink
 	url="http://ftp.indexdata.dk/pub/mp-xquery/redhat/centos/6/README">CentOS 6</ulink>
     ,
@@ -87,7 +87,7 @@
    </para>
    <para>
     The package is called <literal>mp-xquery</literal> on RHEL/Debian systems.
-    Install that package and you are ready to use filter "xquery" in your
+    Install that package, and then you are ready to use filter "xquery" in your
     setup.
    </para>
   </sect1>
@@ -116,7 +116,7 @@
     <screen>
      -D CMAKE_CXX_FLAGS=-std=c++11
     </screen>
-    to the cmake invokation. This is the case on MAC OS X with MacPorts.
+    to the cmake invocation. This is the case on MAC OS X with MacPorts.
    </para>
    <para>
     Metaproxy can be installed as follows:
@@ -142,7 +142,7 @@
    <para>
     You can now install the <filename>metaproxy_filter_xquery.so</filename>
     in a directory searched by Metaproxy daemon.
-    Specifically, that's the directories
+    Specifically, that is the directories
     given by the <literal>dlpath</literal> configuration.
    </para>
    <para>
@@ -154,7 +154,7 @@
    </para>
    <note>
     <para>
-     For RHEL/CentOS systems on 64-bit architectures, the correct paths is:
+     For RHEL/CentOS systems on 64-bit architectures, the correct path is:
      <filename>/usr/lib64/metaproxy6/modules</filename>.
     </para>
    </note>
@@ -175,7 +175,7 @@
    </para>
    <para>
     <literal>config.xml</literal> is a complete Metaproxy configuration file.
-    It includes a standalone configuration that makes Metaproxy offe
+    It includes a standalone configuration that makes Metaproxy offer
     Z39.50 and SRU support on port 9070. The modules in use are http_file
     (to serve XSL files), sru_z3950 (SRU service), cql_rpn (CQL to RPN
     conversion), xquery (to convert MARCXML to BIBFRAME), record_transform
@@ -194,7 +194,7 @@
     <filename>zorba3-0.xqy</filename> part
     of marc2bibframe . Do not move <filename>zorba3-0.xqy</filename>
     from its place within the
-    marc2bibframe directory as other files are referred to and their relative
+    marc2bibframe directory, as other files are referred to and their relative
     location must be preserved.
    </para>
    <para>
@@ -207,10 +207,10 @@
     It is referred to from the sru_z3950 filter in config.xml .
    </para>
    <para>
-    Directory <filename>xsl/..</filename> is client side XSL for brief -
+    The <filename>xsl</filename> directory is client side XSL for brief display
     and full display. These must be located so that the http_file filter
-    can fetch them. For example, if these files are located in
-    <filename>/usr/share/mp-xquery/bibframe/xsl</filename> , then
+    can fetch them. For example, if these files are located in the
+    <filename>/usr/share/mp-xquery/bibframe/xsl</filename> directory, then
     http_file would hold
     <screen><![CDATA[
       <filter type="http_file">
