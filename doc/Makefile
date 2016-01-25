@@ -39,7 +39,7 @@ clean:
 
 distclean: clean
 
-local.ent: local.ent.in 
+local.ent: local.ent.in ../VERSION
 	sed "s/@VERSION@/$(VERSION)/" <local.ent.in >local.ent
 
 check: all
