@@ -16,6 +16,9 @@ clean check: $(CDEP)
 		$(MAKE) -C $$d $@; \
 	done
 
+dist:
+	./mkdist.sh
+
 install:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/bibframe
 	cp -r bibframe $(DESTDIR)$(pkgdatadir)
