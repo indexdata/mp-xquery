@@ -1,4 +1,6 @@
 #!/bin/sh
+git submodule init
+git submodule update
 . ./IDMETA
 set -x
 git log >ChangeLog
