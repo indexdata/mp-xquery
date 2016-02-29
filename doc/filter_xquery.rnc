@@ -1,4 +1,7 @@
-# Metaproxy XML config file schema
+# Metaproxy XML config file schemas
+#
+#   Copyright (C) Index Data
+#   See the LICENSE file for details.
 
 namespace mp = "http://indexdata.com/metaproxy"
 
@@ -8,16 +11,15 @@ filter_xquery =
   attribute name { xsd:NCName }?,
   element mp:elementset {
     attribute name { xsd:string },
-    attribute backend { xsd:string },
+    attribute backend { xsd:string }
   },
   element mp:script {
-    attribute name { xsd:string },
+    attribute name { xsd:string }
   },
   element mp:record {
-    attribute name { xsd:string },
+    attribute name { xsd:string }
   },
   element mp:variable {
     attribute name { xsd:string },
-    attribute value { xsd:string },
+    attribute value { xsd:string }
   }*
-
