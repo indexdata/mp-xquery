@@ -2,7 +2,7 @@
 Summary: Metaproxy XQuery module
 Name: mp-xquery
 Version: %{idmetaversion}
-Release: 1.indexdata
+Release: 2.indexdata
 BuildRequires: gcc gcc-c++ pkgconfig
 BuildRequires: libmetaproxy6-devel >= 1.4.0
 BuildRequires: idzorba
